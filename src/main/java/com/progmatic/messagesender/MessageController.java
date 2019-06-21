@@ -8,10 +8,12 @@ package com.progmatic.messagesender;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -30,16 +32,37 @@ public class MessageController {
         Message m2 = new Message("Géza", "Meg kellene beszélni valamit, hívj fel!", LocalDateTime.now());
         Message m3 = new Message("Anyu", "Hogy ment a meghallgatás?", LocalDateTime.now());
         Message m4 = new Message("Lajos", "Vigyél esernyőt!", LocalDateTime.now());
+        Message m5 = new Message("Anyu", "Megtaláltam az esőkabátodat.", LocalDateTime.now());
+        Message m6 = new Message("Lilla", "Akkor jössz ma este?", LocalDateTime.now());
+        Message m7 = new Message("Lajos", "Holnap jó idő lesz, találkozunk?", LocalDateTime.now());
+        Message m8 = new Message("Kata", "Jó, akkor talizunk 4-kor a szökőkútnál.", LocalDateTime.now());
         messages.add(m1);
         messages.add(m2);
         messages.add(m3);
         messages.add(m4);
+        messages.add(m5);
+        messages.add(m6);
+        messages.add(m7);
+        messages.add(m8);
     }
     
     @RequestMapping(value = "/messages", method = RequestMethod.GET)
-    public String messages(Model model){
-        
-        model.addAttribute("messages", messages);
+    public String listMessages(
+            @RequestParam(value = "mc", defaultValue = "4") int messageCountToShow,
+            @RequestParam(value = "order", defaultValue = "false") boolean inOrder,
+            Model model){
+        if(messageCountToShow < 0) {
+            messageCountToShow = messages.size();
+        }
+        List<Message> messagesInOrder;
+        if (inOrder) {
+            messagesInOrder = messages.stream().sorted(new SenderComparator()).collect(Collectors.toList());
+        } else {
+            messagesInOrder = messages;
+        }
+                                        // Math.min() amelyik a kisebb érték, azt adjuk meg a sublist végső értékének
+        List<Message> shortList = messagesInOrder.subList(0, Math.min(messages.size(), messageCountToShow));
+        model.addAttribute("messages", shortList);
         return "messages";
     }
     

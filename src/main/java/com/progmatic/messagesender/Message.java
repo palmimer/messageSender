@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
  * @author progmatic
  */
 public class Message {
+    static int id;
     String sender;
     String text;
     LocalDateTime sendingTime;
@@ -33,6 +34,6 @@ public class Message {
     public LocalDateTime getSendingTime() {
         return sendingTime;
     }
-    
+
     
 }
