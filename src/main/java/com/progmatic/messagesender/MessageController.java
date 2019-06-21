@@ -7,10 +7,13 @@ package com.progmatic.messagesender;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,9 +54,11 @@ public class MessageController {
             @RequestParam(value = "mc", defaultValue = "4") int messageCountToShow,
             @RequestParam(value = "order", defaultValue = "false") boolean inOrder,
             Model model){
+        
         if(messageCountToShow < 0) {
             messageCountToShow = messages.size();
         }
+        
         List<Message> messagesInOrder;
         if (inOrder) {
             messagesInOrder = messages.stream().sorted(new SenderComparator()).collect(Collectors.toList());
@@ -64,6 +69,23 @@ public class MessageController {
         List<Message> shortList = messagesInOrder.subList(0, Math.min(messages.size(), messageCountToShow));
         model.addAttribute("messages", shortList);
         return "messages";
+    }
+    
+    @RequestMapping(value = "/messages/{messageId}", method = RequestMethod.GET)
+    public String showSingleMessage(
+            @PathVariable("messageId") int messageId, Model model){
+        Map<Integer, Message> messagesWithIds = makeMapWithIds(messages);
+        Message singleMessageToShow = messagesWithIds.get(messageId);
+        model.addAttribute("message", singleMessageToShow);
+        return "singlemessage";
+    }
+
+    private Map<Integer, Message> makeMapWithIds(List<Message> messages) {
+        Map<Integer, Message> mapWithIds = new HashMap<>();
+        for (Message message : messages) {
+            mapWithIds.put(message.getId(), message);
+        }
+        return mapWithIds;
     }
     
 }

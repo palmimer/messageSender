@@ -19,6 +19,7 @@
       <table class="table table-striped">
         <thead>
           <tr>
+            <td>ID</td>  
             <td>Sender</td>
             <td>Message</td>
             <td>Time</td>
@@ -26,6 +27,7 @@
         </thead>
         <tbody>
           <tr data-th-each="message: ${messages}">
+            <td><a data-th-href="@{'/messages/'+${message.id}}" data-th-text="${message.id}"></a></td>
             <td data-th-text="${message.sender}"></td>
             <td data-th-text="${message.text}"></td>
             <td data-th-text="${message.sendingTime}"></td>

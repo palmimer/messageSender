@@ -12,15 +12,17 @@ import java.time.LocalDateTime;
  * @author progmatic
  */
 public class Message {
-    static int id;
-    String sender;
-    String text;
-    LocalDateTime sendingTime;
+    private int id;
+    private static int previousId = 1;
+    private String sender;
+    private String text;
+    private LocalDateTime sendingTime;
 
     public Message( String sender, String text, LocalDateTime sendingTime) {
         this.sender = sender;
         this.text = text;
         this.sendingTime = sendingTime;
+        this.id = previousId ++;
     }
 
     public String getText() {
@@ -33,6 +35,10 @@ public class Message {
 
     public LocalDateTime getSendingTime() {
         return sendingTime;
+    }
+
+    public int getId() {
+        return id;
     }
 
     
