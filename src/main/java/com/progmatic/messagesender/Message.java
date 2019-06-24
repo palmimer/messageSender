@@ -6,6 +6,8 @@
 package com.progmatic.messagesender;
 
 import java.time.LocalDateTime;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -13,10 +15,19 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author progmatic
  */
 public class Message {
+    @NotNull
     private int id;
+    
     private static int previousId = 1;
+    
+    @NotNull
+    @Size(min = 1, message="A név nincs kitöltve!")
     private String sender;
+    
+    @NotNull
+    @Size(min = 1, message="Az üzenet nincs megírva!")
     private String text;
+    
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
     private LocalDateTime sendingTime;
 
@@ -35,7 +46,7 @@ public class Message {
     public String getText() {
         return text;
     }
-
+    
     public String getSender() {
         return sender;
     }
@@ -51,7 +62,7 @@ public class Message {
     public void setId(int id) {
         this.id = id;
     }
-
+    
     public void setSender(String sender) {
         this.sender = sender;
     }

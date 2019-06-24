@@ -1,0 +1,25 @@
+#cimsor {
+  margin:10px auto;
+}
+
+#urlapok {
+  margin-top:10px;
+  margin-bottom:20px;
+}
+
+form label {
+  margin-top:5px;
+}
+
+#write-text {
+  width:100%;
+}
+
+#send-button {
+  margin-top:15px;
+  margin-bottom:20px;
+}
+
+#input-sender {
+  width:100%;
+}
