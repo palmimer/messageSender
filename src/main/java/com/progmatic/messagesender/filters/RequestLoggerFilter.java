@@ -12,6 +12,8 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 
@@ -24,6 +26,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class RequestLoggerFilter implements Filter {
 
+    private final Logger logger = LoggerFactory.getLogger(RequestLoggerFilter.class);
+    
     @Override
     public void doFilter(ServletRequest srq, ServletResponse srp, FilterChain fc) 
             throws IOException, ServletException {
@@ -35,7 +39,9 @@ public class RequestLoggerFilter implements Filter {
 //            }
 //        }
         
-        srq.getParameterMap().forEach((k, v) -> System.out.println(k + ": " + String.join(",", v)));
+        srq.getParameterMap().forEach((k, v) -> logger.debug("{}: {}", k , v));
+        
+//        srq.getParameterMap().forEach((k, v) -> System.out.println(k + ": " + String.join(",", v)));
         
 //        System.out.println("Bejövő: Az új üzenet feladója: " + srq.getParameter("sender"));
 //        System.out.println("Bejövő: Az új üzenet szövege: " + srq.getParameter("text"));

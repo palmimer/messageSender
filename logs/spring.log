@@ -1,0 +1,55 @@
+2019-06-24 14:53:44.404  INFO 8781 --- [restartedMain] c.p.messagesender.StartApplication       : Starting StartApplication on progmatic-1 with PID 8781 (/home/progmatic/NetBeansProjects/MessageSender/target/classes started by progmatic in /home/progmatic/NetBeansProjects/MessageSender)
+2019-06-24 14:53:44.404 DEBUG 8781 --- [restartedMain] c.p.messagesender.StartApplication       : Running with Spring Boot v2.1.5.RELEASE, Spring v5.1.7.RELEASE
+2019-06-24 14:53:44.404  INFO 8781 --- [restartedMain] c.p.messagesender.StartApplication       : No active profile set, falling back to default profiles: default
+2019-06-24 14:53:44.700  INFO 8781 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-06-24 14:53:44.704  INFO 8781 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-06-24 14:53:44.704  INFO 8781 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.19]
+2019-06-24 14:53:44.711  INFO 8781 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-06-24 14:53:44.712  INFO 8781 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 303 ms
+2019-06-24 14:53:44.785  INFO 8781 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-06-24 14:53:44.836  INFO 8781 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-06-24 14:53:44.858  INFO 8781 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2019-06-24 14:53:44.859  INFO 8781 --- [restartedMain] c.p.messagesender.StartApplication       : Started StartApplication in 0.531 seconds (JVM running for 3743.456)
+2019-06-24 14:53:44.860  INFO 8781 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2019-06-24 14:55:00.368  INFO 8781 --- [Thread-22] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2019-06-24 14:55:00.571  INFO 8781 --- [restartedMain] c.p.messagesender.StartApplication       : Starting StartApplication on progmatic-1 with PID 8781 (/home/progmatic/NetBeansProjects/MessageSender/target/classes started by progmatic in /home/progmatic/NetBeansProjects/MessageSender)
+2019-06-24 14:55:00.571 DEBUG 8781 --- [restartedMain] c.p.messagesender.StartApplication       : Running with Spring Boot v2.1.5.RELEASE, Spring v5.1.7.RELEASE
+2019-06-24 14:55:00.572  INFO 8781 --- [restartedMain] c.p.messagesender.StartApplication       : No active profile set, falling back to default profiles: default
+2019-06-24 14:55:00.891  INFO 8781 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-06-24 14:55:00.893  INFO 8781 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-06-24 14:55:00.893  INFO 8781 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.19]
+2019-06-24 14:55:00.898  INFO 8781 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-06-24 14:55:00.899  INFO 8781 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 323 ms
+2019-06-24 14:55:00.960  INFO 8781 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-06-24 14:55:01.002  INFO 8781 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-06-24 14:55:01.028  INFO 8781 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2019-06-24 14:55:01.029  INFO 8781 --- [restartedMain] c.p.messagesender.StartApplication       : Started StartApplication in 0.5 seconds (JVM running for 3819.626)
+2019-06-24 14:55:01.030  INFO 8781 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2019-06-24 14:58:01.690  INFO 8781 --- [Thread-28] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2019-06-24 14:58:01.819  INFO 8781 --- [restartedMain] c.p.messagesender.StartApplication       : Starting StartApplication on progmatic-1 with PID 8781 (/home/progmatic/NetBeansProjects/MessageSender/target/classes started by progmatic in /home/progmatic/NetBeansProjects/MessageSender)
+2019-06-24 14:58:01.820 DEBUG 8781 --- [restartedMain] c.p.messagesender.StartApplication       : Running with Spring Boot v2.1.5.RELEASE, Spring v5.1.7.RELEASE
+2019-06-24 14:58:01.820  INFO 8781 --- [restartedMain] c.p.messagesender.StartApplication       : No active profile set, falling back to default profiles: default
+2019-06-24 14:58:02.109  INFO 8781 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-06-24 14:58:02.112  INFO 8781 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-06-24 14:58:02.113  INFO 8781 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.19]
+2019-06-24 14:58:02.120  INFO 8781 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-06-24 14:58:02.120  INFO 8781 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 297 ms
+2019-06-24 14:58:02.212  INFO 8781 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-06-24 14:58:02.286  INFO 8781 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-06-24 14:58:02.329  INFO 8781 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2019-06-24 14:58:02.330  INFO 8781 --- [restartedMain] c.p.messagesender.StartApplication       : Started StartApplication in 0.534 seconds (JVM running for 4000.927)
+2019-06-24 14:58:02.332  INFO 8781 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2019-06-24 14:59:56.867  INFO 8781 --- [Thread-34] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2019-06-24 14:59:57.021  INFO 8781 --- [restartedMain] c.p.messagesender.StartApplication       : Starting StartApplication on progmatic-1 with PID 8781 (/home/progmatic/NetBeansProjects/MessageSender/target/classes started by progmatic in /home/progmatic/NetBeansProjects/MessageSender)
+2019-06-24 14:59:57.022 DEBUG 8781 --- [restartedMain] c.p.messagesender.StartApplication       : Running with Spring Boot v2.1.5.RELEASE, Spring v5.1.7.RELEASE
+2019-06-24 14:59:57.022  INFO 8781 --- [restartedMain] c.p.messagesender.StartApplication       : No active profile set, falling back to default profiles: default
+2019-06-24 14:59:57.346  INFO 8781 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-06-24 14:59:57.347  INFO 8781 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-06-24 14:59:57.348  INFO 8781 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.19]
+2019-06-24 14:59:57.376  INFO 8781 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-06-24 14:59:57.376  INFO 8781 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 351 ms
+2019-06-24 14:59:57.434  INFO 8781 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-06-24 14:59:57.476  INFO 8781 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-06-24 14:59:57.506  INFO 8781 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2019-06-24 14:59:57.508  INFO 8781 --- [restartedMain] c.p.messagesender.StartApplication       : Started StartApplication in 0.511 seconds (JVM running for 4116.105)
+2019-06-24 14:59:57.510  INFO 8781 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
