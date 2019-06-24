@@ -6,6 +6,7 @@
 package com.progmatic.messagesender;
 
 import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -16,6 +17,7 @@ public class Message {
     private static int previousId = 1;
     private String sender;
     private String text;
+    @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
     private LocalDateTime sendingTime;
 
     public Message( String sender, String text, LocalDateTime sendingTime) {
@@ -25,6 +27,11 @@ public class Message {
         this.id = previousId ++;
     }
 
+    public Message() {
+        this.sendingTime = LocalDateTime.now();
+        this.id = previousId ++;
+    }
+    
     public String getText() {
         return text;
     }
@@ -40,6 +47,22 @@ public class Message {
     public int getId() {
         return id;
     }
+    
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setSendingTime(LocalDateTime sendingTime) {
+        this.sendingTime = sendingTime;
+    }
+    
     
 }

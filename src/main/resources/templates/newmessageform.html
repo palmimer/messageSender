@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Write new message</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h2>Új üzenet írása</h2>
+        <form method="POST" data-th-action="@{/messages/newmessage}" data-th-object="${message}">
+            <input type="text" placeholder="küldő neve" data-th-field="*{sender}"/>
+            <input type="text" placeholder="üzenet" data-th-field="*{text}"/>
+            <input type="submit" value="Submit"/>
+        </form>
+    </body>
+</html>

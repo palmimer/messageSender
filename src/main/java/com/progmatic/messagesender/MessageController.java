@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,7 +52,7 @@ public class MessageController {
     
     @RequestMapping(value = "/messages", method = RequestMethod.GET)
     public String listMessages(
-            @RequestParam(value = "mc", defaultValue = "4") int messageCountToShow,
+            @RequestParam(value = "mc", defaultValue = "15") int messageCountToShow,
             @RequestParam(value = "order", defaultValue = "false") boolean inOrder,
             Model model){
         
@@ -78,6 +79,19 @@ public class MessageController {
         Message singleMessageToShow = messagesWithIds.get(messageId);
         model.addAttribute("message", singleMessageToShow);
         return "singlemessage";
+    }
+    
+    @RequestMapping(value = "/messages/writenew", method = RequestMethod.GET)
+    public String writeNewMessage(Model model){
+        model.addAttribute("message", new Message("", "", LocalDateTime.now()));
+        return "newmessageform";
+    }
+    
+    @RequestMapping(value = "/messages/newmessage", method = RequestMethod.POST)
+    public String createNewMessage(
+            @ModelAttribute("message") Message message ){
+        messages.add(message);
+        return "redirect:/messages";
     }
 
     private Map<Integer, Message> makeMapWithIds(List<Message> messages) {
