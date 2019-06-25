@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/messages_style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+
+            <div class="col-md-6 col-lg-8 m-auto">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td><h3>Statisztika</h3></td>
+                            <td><h3>Eredmény</h3></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Az utoljára küldő felhasználó</td>
+                            <td data-th-text="${sender}"></td>
+                        </tr>
+                        <tr>
+                            <td>A felhasználó üzeneteinek száma ebben a munkamenetben</td>
+                            <td data-th-text="${countOfNewMessagesOfUser}"></td>
+                        </tr>
+                        <tr>
+                            <td>A munkamenetben használt felhasználónevek</td>
+                            <td data-th-text="${usernames}"></td>
+                        </tr>
+                        <tr>
+                            <td>A munkamenetben használt felhasználónevek száma</td>
+                            <td data-th-text="${countOfUsers}"></td>
+                        </tr>
+                        <tr>
+                            <td>A munkamenetben feladott összes üzenet száma</td>
+                            <td data-th-text="${countOfAllMessages}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </body>
+</html>

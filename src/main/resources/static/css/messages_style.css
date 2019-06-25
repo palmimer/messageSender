@@ -23,3 +23,12 @@ form label {
 #input-sender {
   width:100%;
 }
+
+.btn-primary a, .btn-secondary a {
+    color: white;
+    text-decoration: none;
+}
+.btn-right {
+    float: right;
+}
+
