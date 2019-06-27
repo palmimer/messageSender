@@ -16,11 +16,11 @@
             <div class="col-6" id="newmessageform">
               <h2>Új üzenet írása</h2>
               <form method="POST" data-th-action="@{/messages/newmessage}" data-th-object="${message}">
-                  <div>
+                  <!--<div>
                     <label for="input-sender">Az üzenet feladója:  </br></label>
                     <input type="text" id="input-sender" data-th-field="*{sender}" placeholder="Feladó"/>
                     <div data-th-if="${#fields.hasErrors('sender')}" data-th-errors="*{sender}">A név nincs kitöltve!</div>
-                  </div>
+                  </div>-->
                   <div>
                     <label for="write-text">Az üzenet szövege: </br></label>
                     <textarea class="form-control" id="write-text" rows="3" placeholder="Ide írd az üzenetet"

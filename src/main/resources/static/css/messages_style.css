@@ -24,7 +24,7 @@ form label {
   width:100%;
 }
 
-.btn-primary a, .btn-secondary a {
+.btn-primary a, .btn-secondary a, a .btn-success, a .btn-warning {
     color: white;
     text-decoration: none;
 }

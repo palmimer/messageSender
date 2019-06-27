@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Regisztráció</title>
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/messages_style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+    <div class="row" id="urlap">
+      <div class="col-6" id="registrationform">
+        <div>
+            <h2>Regisztráció</h2>
+        </div>
+          <form method="POST" data-th-action="@{/messages/newregistration}" data-th-object="${registration}">
+            <div>
+              <label for="input-username">Felhasználónév: </br></label>
+              <input type="text" id="input-username" name="username" data-th-field="*{userName}" placeholder="felhasználónév"/>
+              <div data-th-if="${#fields.hasErrors('userName')}" data-th-errors="*{userName}"></div>
+            </div>
+            <div>
+              <label for="input-email">E-mail cím: </br></label>
+              <input type="text" id="input-email" name="email" placeholder="e-mail cím"/>
+            </div>  
+            <div>
+              <label for="input-password1">Jelszó: <br></label>
+              <input type="password" id="input-password1" name="password1" placeholder="válassz egy jelszót"/>
+            </div>
+            <div>
+              <label for="input-password2">Jelszó: <br></label>
+              <input type="password" id="input-password2" name="password2" placeholder="jelszó még egyszer"/>
+            </div>
+            <input type="submit" id="register-button" value="Regisztrálok"/>
+        </form>
+      </div>
+
+      </div>
+    </div>
+  </body>
+</html>

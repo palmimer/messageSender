@@ -17,6 +17,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -67,7 +69,7 @@ public class MessageController {
     
     @RequestMapping(value = "/messages/writenew", method = RequestMethod.GET)
     public String writeNewMessage(Model model){
-        model.addAttribute("message", new Message(userStatistics.getUser(), "", LocalDateTime.now()));
+        model.addAttribute("message", new Message("", "", LocalDateTime.now()));
         return "newmessageform";
     }
     
@@ -78,7 +80,9 @@ public class MessageController {
         if (bindingResult.hasErrors()) {
             return "newmessageform";
         }
-        userStatistics.setUser(message.getSender());
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        message.setSender(user.getUsername());
+        userStatistics.setUser(user.getUsername());
         messageService.addNewMessage(message);
         userStatistics.addNewMessage(message);
         return "redirect:/messages";

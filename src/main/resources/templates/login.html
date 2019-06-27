@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Bejelentkezés</title>
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/messages_style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+    <div class="row" id="urlap">
+      <div class="col-6" id="login">
+        <div>
+            <h2>Bejelentkezés</h2>
+        </div>
+          <form method="POST" data-th-action="@{/messages/login}">
+            <div>
+              <label for="input-username">Felhasználónév</br></label>
+              <input type="text" id="input-username" name="username" placeholder="felhasználónév"/>
+              
+            </div>
+            <div>
+              <label for="input-password">Jelszó<br></label>
+              <input type="password" id="input-password" name="password" placeholder="jelszó"/>
+              
+            </div>
+            <input type="submit" id="login-button" value="Bejelentkezés"/>
+        </form>
+      </div>
+
+      </div>
+    </div>
+  </body>
+</html>

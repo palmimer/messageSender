@@ -20,8 +20,6 @@ public class Message {
     
     private static int previousId = 1;
     
-    @NotNull
-    @Size(min = 1, message="A név nincs kitöltve!")
     private String sender;
     
     @NotNull
