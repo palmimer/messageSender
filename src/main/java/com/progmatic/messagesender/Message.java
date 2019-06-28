@@ -28,17 +28,21 @@ public class Message {
     
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
     private LocalDateTime sendingTime;
+    
+    private boolean isDeleted;
 
     public Message( String sender, String text, LocalDateTime sendingTime) {
         this.sender = sender;
         this.text = text;
         this.sendingTime = sendingTime;
         this.id = previousId ++;
+        this.isDeleted = false;
     }
 
     public Message() {
         this.sendingTime = LocalDateTime.now();
         this.id = previousId ++;
+        this.isDeleted = false;
     }
     
     public String getText() {
@@ -71,6 +75,14 @@ public class Message {
 
     public void setSendingTime(LocalDateTime sendingTime) {
         this.sendingTime = sendingTime;
+    }
+    
+    public void setToDelete(){
+        this.isDeleted = true;
+    }
+
+    public boolean isIsDeleted() {
+        return isDeleted;
     }
     
     

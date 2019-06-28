@@ -33,25 +33,27 @@
             <td>Sender</td>
             <td>Message</td>
             <td>Time</td>
+            <td data-sec-authorize="hasRole('ADMIN')">Status</td>
+            <td data-sec-authorize="hasRole('ADMIN')">Delete</td>
           </tr>
         </thead>
         <tbody>
           <tr data-th-each="message: ${messages}">
-            <td><a data-th-href="@{'/messages/'+${message.id}}" data-th-text="${message.id}"></a></td>
+            <td><a data-th-href="@{'/messages/' + ${message.id}}" data-th-text="${message.id}"></a></td>
             <td data-th-text="${message.sender}"></td>
             <td data-th-text="${message.text}"></td>
             <td data-th-text="${message.sendingTime}"></td>
+            <td data-sec-authorize="hasRole('ADMIN')" data-th-text="${message.isDeleted}? 'true'" >törölve</td>
+            <td data-sec-authorize="hasRole('ADMIN')" >
+                <a class="btn btn-secondary" data-th-href="@{'/messages/delete/' + ${message.id}}">Törlés</a>
+            </td>
           </tr>
         </tbody>
     </table>
     <div>
-        <button type="button" class="btn btn-primary">
-            <a data-th-href="@{/messages/writenew}">Új üzenet írása</a>
-        </button>
-        <button type="button" class="btn btn-secondary btn-right">
-            <a data-th-href="@{/messages/statistics}">Statisztika</a>
-        </button>
-    </div>
+        <a class="btn btn-primary" data-th-href="@{/messages/writenew}">Új üzenet írása</a>
+        <a class="btn btn-secondary btn-right" data-th-href="@{/messages/statistics}">Statisztika</a>
+        </div>
   </div>
 
   </body>

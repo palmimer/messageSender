@@ -8,11 +8,8 @@ package com.progmatic.messagesender.controllers;
 import com.progmatic.messagesender.Message;
 import com.progmatic.messagesender.service.MessageServiceImpl;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,9 +48,14 @@ public class MessageController {
     public String listMessages(
             @RequestParam(value = "mc", defaultValue = "15") int messageCountToShow,
             @RequestParam(value = "order", defaultValue = "false") boolean inOrder,
+            HttpServletRequest servletRequest,
             Model model){
-        
-        List<Message> shortList = messageService.listMessages(messageCountToShow, inOrder);
+        List<Message> shortList;
+        if (servletRequest.isUserInRole("ADMIN")) {
+            shortList = messageService.listAllMessages(messageCountToShow, inOrder);
+        } else {
+            shortList = messageService.listNotDeletedMessages(messageCountToShow, inOrder);
+        }
         model.addAttribute("messages", shortList);
         return "messages";
     }
@@ -85,6 +87,13 @@ public class MessageController {
         userStatistics.setUser(user.getUsername());
         messageService.addNewMessage(message);
         userStatistics.addNewMessage(message);
+        return "redirect:/messages";
+    }
+    
+    @RequestMapping(value= "/messages/delete/{messageId}", method = RequestMethod.GET)
+    public String deleteMessage(
+            @PathVariable("messageId") int messageId){
+        messageService.deleteMessage(messageId);
         return "redirect:/messages";
     }
     

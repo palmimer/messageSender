@@ -40,7 +40,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/messages", "/login", "/css/*" ).permitAll()
                 .antMatchers("/messages/register", "/messages/newregistration").permitAll()
                 // ezt az oldalt csak bejelentkezett felhasználó érheti el
-                .antMatchers("/messages/writenew").access("hasRole('USER')")
+                //.antMatchers("/messages/writenew").access("hasRole('USER') or hasRole('ADMIN')")
                 .anyRequest().authenticated();
     }
     

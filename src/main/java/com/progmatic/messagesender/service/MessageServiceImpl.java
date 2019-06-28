@@ -47,22 +47,47 @@ public class MessageServiceImpl {
         messages.add(m8);
     }
     
-    public List<Message> listMessages(int messageCountToShow, boolean inOrder){
+    public List<Message> listNotDeletedMessages(int messageCountToShow, boolean inOrder){
+        List<Message> validMessages = getNotDeletedMessages();
+        if(messageCountToShow < 0) {
+            messageCountToShow = validMessages.size();
+        }
+        
+        List<Message> messagesInOrder;
+        if (inOrder) {
+            messagesInOrder = putListInOrderByName(validMessages);
+        } else {
+            messagesInOrder = validMessages;
+        }
+        List<Message> shortList = makeShortList(messageCountToShow, messagesInOrder);
+        return shortList;
+    }
+    
+    public List<Message> listAllMessages(int messageCountToShow, boolean inOrder){
         if(messageCountToShow < 0) {
             messageCountToShow = messages.size();
         }
         
         List<Message> messagesInOrder;
         if (inOrder) {
-            messagesInOrder = messages.stream().sorted(new SenderComparator()).collect(Collectors.toList());
+            messagesInOrder = putListInOrderByName(messages);
         } else {
             messagesInOrder = messages;
         }
-                                        // Math.min() amelyik a kisebb érték, azt adjuk meg a sublist végső értékének
-        List<Message> shortList = messagesInOrder.subList(0, Math.min(messages.size(), messageCountToShow));
+        List<Message> shortList = makeShortList(messageCountToShow, messagesInOrder);
         return shortList;
     }
 
+    private List<Message> getNotDeletedMessages(){
+        List<Message> validMessages = new ArrayList<>();
+        for (int i = 0; i < messages.size(); i++) {
+            if (!messages.get(i).isIsDeleted()) {
+                validMessages.add(messages.get(i));
+            }
+        }
+        return validMessages;
+    }
+    
     public List<Message> getMessages() {
         return messages;
     }
@@ -70,6 +95,31 @@ public class MessageServiceImpl {
     public Message getSingleMessage(int messageId){
         Map<Integer, Message> messagesWithIds = makeMapWithIds();
         return messagesWithIds.get(messageId);
+    }
+    
+    public void addNewMessage(Message message) {
+        messages.add(message);
+    }
+
+    public void deleteMessage(int messageId) {
+        int index = findIndexOfMessage(messageId);
+        if (index > -1 ) {
+            messages.remove(index);
+        }
+    }
+    
+    public void setMessageToDelete(int messageId){
+        getSingleMessage(messageId).setToDelete();
+    }
+    
+    private int findIndexOfMessage(int messageId){
+        int indexToFind = -1;
+        for (int i = 0; i < messages.size(); i++) {
+            if (messages.get(i).getId() == messageId) {
+                indexToFind = i;
+            }
+        }
+        return indexToFind;
     }
     
     private Map<Integer, Message> makeMapWithIds() {
@@ -80,12 +130,13 @@ public class MessageServiceImpl {
         return mapWithIds;
     }
     
-    public void addNewMessage(Message message) {
-        messages.add(message);
+    private List<Message> putListInOrderByName(List<Message> list){
+        return list.stream().sorted(new SenderComparator()).collect(Collectors.toList());
     }
-
     
-    
-    
+    private List<Message> makeShortList(int messageCountToShow, List<Message> list ){
+        // Math.min() amelyik a kisebb érték, azt adjuk meg a sublist végső értékének
+        return list.subList(0, Math.min(list.size(), messageCountToShow));
+    }
     
 }
