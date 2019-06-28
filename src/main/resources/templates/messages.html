@@ -43,9 +43,9 @@
             <td data-th-text="${message.sender}"></td>
             <td data-th-text="${message.text}"></td>
             <td data-th-text="${message.sendingTime}"></td>
-            <td data-sec-authorize="hasRole('ADMIN')" data-th-text="${message.isDeleted}? 'true'" >törölve</td>
-            <td data-sec-authorize="hasRole('ADMIN')" >
-                <a class="btn btn-secondary" data-th-href="@{'/messages/delete/' + ${message.id}}">Törlés</a>
+            <td data-sec-authorize="hasRole('ADMIN')" data-th-text="${message.isDeleted}? 'törölve'" ></td>
+            <td data-sec-authorize="hasRole('ADMIN')">
+                <a class="btn btn-secondary" data-th-if="${!message.isDeleted}" data-th-href="@{'/messages/delete/' + ${message.id}}">Törlés</a>
             </td>
           </tr>
         </tbody>

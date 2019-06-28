@@ -48,36 +48,40 @@ public class MessageServiceImpl {
     }
     
     public List<Message> listNotDeletedMessages(int messageCountToShow, boolean inOrder){
-        List<Message> validMessages = getNotDeletedMessages();
-        if(messageCountToShow < 0) {
-            messageCountToShow = validMessages.size();
-        }
-        
-        List<Message> messagesInOrder;
-        if (inOrder) {
-            messagesInOrder = putListInOrderByName(validMessages);
-        } else {
-            messagesInOrder = validMessages;
-        }
-        List<Message> shortList = makeShortList(messageCountToShow, messagesInOrder);
-        return shortList;
+        List<Message> notDeletedMessages = getNotDeletedMessages();
+        List<Message> processedList = processListByConditions(messageCountToShow, inOrder, notDeletedMessages);
+        return processedList;
     }
     
     public List<Message> listAllMessages(int messageCountToShow, boolean inOrder){
+        List<Message> processedList = processListByConditions(messageCountToShow, inOrder, messages);
+        return processedList;
+    }
+    
+    public List<Message> listDeletedMessages(int messageCountToShow, boolean inOrder){
+        List<Message> deletedMessages = getDeletedMessages();
+        List<Message> processedList = processListByConditions(messageCountToShow, inOrder, deletedMessages);
+        return processedList;
+    }
+    
+    public List<Message> getMessages() {
+        return messages;
+    }
+    
+    private List<Message> processListByConditions(int messageCountToShow, boolean inOrder, List<Message> list){
         if(messageCountToShow < 0) {
-            messageCountToShow = messages.size();
+            messageCountToShow = list.size();
         }
-        
-        List<Message> messagesInOrder;
+        List<Message> processedList;
         if (inOrder) {
-            messagesInOrder = putListInOrderByName(messages);
+            processedList = putListInOrderByName(list);
         } else {
-            messagesInOrder = messages;
+            processedList = list;
         }
-        List<Message> shortList = makeShortList(messageCountToShow, messagesInOrder);
+        List<Message> shortList = makeShortList(messageCountToShow, processedList);
         return shortList;
     }
-
+    
     private List<Message> getNotDeletedMessages(){
         List<Message> validMessages = new ArrayList<>();
         for (int i = 0; i < messages.size(); i++) {
@@ -86,10 +90,6 @@ public class MessageServiceImpl {
             }
         }
         return validMessages;
-    }
-    
-    public List<Message> getMessages() {
-        return messages;
     }
     
     public Message getSingleMessage(int messageId){
@@ -137,6 +137,16 @@ public class MessageServiceImpl {
     private List<Message> makeShortList(int messageCountToShow, List<Message> list ){
         // Math.min() amelyik a kisebb érték, azt adjuk meg a sublist végső értékének
         return list.subList(0, Math.min(list.size(), messageCountToShow));
+    }
+
+    private List<Message> getDeletedMessages() {
+        List<Message> deletedMessages = new ArrayList<>();
+        for (int i = 0; i < messages.size(); i++) {
+            if (messages.get(i).isIsDeleted()) {
+                deletedMessages.add(messages.get(i));
+            }
+        }
+        return deletedMessages;
     }
     
 }

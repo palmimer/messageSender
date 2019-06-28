@@ -8,6 +8,7 @@ package com.progmatic.messagesender.controllers;
 import com.progmatic.messagesender.Message;
 import com.progmatic.messagesender.service.MessageServiceImpl;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -50,10 +51,10 @@ public class MessageController {
             @RequestParam(value = "order", defaultValue = "false") boolean inOrder,
             HttpServletRequest servletRequest,
             Model model){
-        List<Message> shortList;
+        List<Message> shortList = new ArrayList<>();
         if (servletRequest.isUserInRole("ADMIN")) {
             shortList = messageService.listAllMessages(messageCountToShow, inOrder);
-        } else {
+        } else if (servletRequest.isUserInRole("USER")){
             shortList = messageService.listNotDeletedMessages(messageCountToShow, inOrder);
         }
         model.addAttribute("messages", shortList);
@@ -93,7 +94,7 @@ public class MessageController {
     @RequestMapping(value= "/messages/delete/{messageId}", method = RequestMethod.GET)
     public String deleteMessage(
             @PathVariable("messageId") int messageId){
-        messageService.deleteMessage(messageId);
+        messageService.setMessageToDelete(messageId);
         return "redirect:/messages";
     }
     
