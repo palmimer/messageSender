@@ -22,9 +22,24 @@
             <input type="submit" value="Logout">
       </form>
         
-      <div>
-        <a class="btn btn-warning" data-th-href="@{/messages/login}">Bejelentkezés</a>
-        <a class="btn btn-success btn-right" data-th-href="@{/messages/register}">Regisztráció</a>
+      <div class="row">
+          <a class="btn btn-warning" data-th-href="@{/messages/login}">Bejelentkezés</a>
+            <form class="col form-inline" data-th-action="@{/messages/}" method="get" data-sec-authorize="hasRole('ADMIN')">
+                <div class="form-row align-items-center">
+                    <div class="col-auto my-1">
+                      <label class="mr-sm-2 sr-only" for="showDeletedOrNot">Preference</label>
+                      <select class="custom-select mr-sm-2" id="showDeletedOrNot" name="selectMessages">
+                          <option selected value="all">Minden üzenet látható</option>
+                          <option value="notdeleted">Csak az érvényes üzenetek láthatók</option>
+                          <option value="deleted">Csak a törölt üzenetek láthatók</option>
+                      </select>
+                    </div>
+                    <div class="col-auto my-1">
+                      <button type="submit" class="btn btn-outline-dark">OK</button>
+                    </div>
+                </div>
+            </form>
+          <a class="btn btn-success btn-right" data-th-href="@{/messages/register}">Regisztráció</a>
       </div>
       <table class="table table-striped">
         <thead>
@@ -42,7 +57,7 @@
             <td><a data-th-href="@{'/messages/' + ${message.id}}" data-th-text="${message.id}"></a></td>
             <td data-th-text="${message.sender}"></td>
             <td data-th-text="${message.text}"></td>
-            <td data-th-text="${message.sendingTime}"></td>
+            <td data-th-text="${{message.sendingTime}}"></td>
             <td data-sec-authorize="hasRole('ADMIN')" data-th-text="${message.isDeleted}? 'törölve'" ></td>
             <td data-sec-authorize="hasRole('ADMIN')">
                 <a class="btn btn-secondary" data-th-if="${!message.isDeleted}" data-th-href="@{'/messages/delete/' + ${message.id}}">Törlés</a>

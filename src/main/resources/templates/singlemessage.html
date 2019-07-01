@@ -27,9 +27,9 @@ and open the template in the editor.
                 </div>
   		<div class="card-body">
                     <p class="card-text" data-th-text="${message.text}">Message text: With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Válasz</a>
+                    <a data-th-href="@{/messages/writenew}" class="btn btn-primary">Válasz</a>
   		</div>
-  		<div class="card-footer text-muted" data-th-text="${message.sendingTime}">2018-12-21 10:10</div>
+  		<div class="card-footer text-muted" data-th-text="${{message.sendingTime}}">2018-12-21 10:10</div>
   	    </div>
   	</div>
 

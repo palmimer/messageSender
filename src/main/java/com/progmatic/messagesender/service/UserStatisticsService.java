@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.progmatic.messagesender.controllers;
+package com.progmatic.messagesender.service;
 
 import com.progmatic.messagesender.Message;
 import com.progmatic.messagesender.UserStatistics;
+import com.progmatic.messagesender.controllers.MessageController;
 import com.progmatic.messagesender.service.MessageServiceImpl;
 import java.util.ArrayList;
 import java.util.List;

@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 /**
@@ -100,7 +101,8 @@ public class MessageServiceImpl {
     public void addNewMessage(Message message) {
         messages.add(message);
     }
-
+    
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteMessage(int messageId) {
         int index = findIndexOfMessage(messageId);
         if (index > -1 ) {

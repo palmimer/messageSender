@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Error Message</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/messages_style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+      <div class="container mt-3">
+        <div class="col-md-6 col-lg-8 m-auto">
+            <div class="card mt-3">
+                <div class="card-title ml-3">
+                    <img src="img/perry.jpg" class="card-img-top" alt="Hibaüzenet kép" id="errorimg">
+                    <h2 class="mt-2 mr-2 p-1">Hibaüzenet</h2>
+                </div>
+  		<div class="card-body">
+                    <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#errormessage" role="button" aria-expanded="false" aria-controls="errormessage">
+                    Mutass többet</a>
+                    <div class="collapse" id="errormessage">
+                        <div  class="card card-body" data-th-text=""></div>
+                    </div>
+  		</div>
+            </div>
+  	</div>
+      </div>
+    </body>
+</html>
