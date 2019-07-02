@@ -81,6 +81,10 @@ public class Message implements Serializable {
     public void setToDelete(){
         this.isDeleted = true;
     }
+    
+    public void setNotToDelete(){
+        this.isDeleted = false;
+    }
 
     public boolean isIsDeleted() {
         return isDeleted;

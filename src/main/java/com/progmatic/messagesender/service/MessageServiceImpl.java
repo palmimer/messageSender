@@ -127,20 +127,36 @@ public class MessageServiceImpl {
 //        messages.add(message);
     }
     
+    
+    
+    @Transactional
+    public void setMessageToDelete(int messageId){
+        getSingleMessage(messageId).setToDelete();
+    }
+    
+    @Transactional
+    public void restoreMessage(int messageId){
+        getSingleMessage(messageId).setNotToDelete();
+    }
+    
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
-    public void deleteMessage(int messageId) {
+    public void finallyDeleteSelectedMessages(){
+        List<Message> toDelete = getDeletedMessages();
+        for (Message message : toDelete) {
+            deleteMessage(message.getId());
+        }
+    }
+    
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @Transactional
+    private void deleteMessage(int messageId) {
         
         em.remove(getSingleMessage(messageId));
 //        int index = findIndexOfMessage(messageId);
 //        if (index > -1 ) {
 //            messages.remove(index);
 //        }
-    }
-    
-    @Transactional
-    public void setMessageToDelete(int messageId){
-        getSingleMessage(messageId).setToDelete();
     }
     
 //    private int findIndexOfMessage(int messageId){
@@ -169,7 +185,8 @@ public class MessageServiceImpl {
         // Math.min() amelyik a kisebb érték, azt adjuk meg a sublist végső értékének
         return list.subList(0, Math.min(list.size(), messageCountToShow));
     }
-
+    
+    @Transactional
     private List<Message> getDeletedMessages() {
         return em.createQuery("SELECT m FROM Message m WHERE m.isDeleted = :isDeleted")
                 .setParameter("isDeleted", true)

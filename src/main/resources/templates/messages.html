@@ -58,9 +58,12 @@
             <td data-th-text="${message.sender}"></td>
             <td data-th-text="${message.text}"></td>
             <td data-th-text="${{message.sendingTime}}"></td>
-            <td data-sec-authorize="hasRole('ADMIN')" data-th-text="${message.isDeleted}? 'törölve'" ></td>
+            <td data-sec-authorize="hasRole('ADMIN')" data-th-text="${message.isDeleted}? 'törölve'" >
+                
+            </td>
             <td data-sec-authorize="hasRole('ADMIN')">
                 <a class="btn btn-secondary" data-th-if="${!message.isDeleted}" data-th-href="@{'/messages/delete/' + ${message.id}}">Törlés</a>
+                <a class="btn btn-light btn-sm" data-th-if="${message.isDeleted}" data-th-href="@{'/messages/restore/' + ${message.id}}">Visszavonás</a>
             </td>
           </tr>
         </tbody>
@@ -68,6 +71,7 @@
     <div>
         <a class="btn btn-primary" data-th-href="@{/messages/writenew}">Új üzenet írása</a>
         <a class="btn btn-secondary btn-right" data-th-href="@{/messages/statistics}">Statisztika</a>
+        <a class="btn btn-outline-dark btn-small btn-right" data-sec-authorize="hasRole('ADMIN')" data-th-href="@{/messages/finaldelete}">Végleges törlés</a>
         </div>
   </div>
 

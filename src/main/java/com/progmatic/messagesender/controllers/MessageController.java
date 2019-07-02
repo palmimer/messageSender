@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -112,6 +113,21 @@ public class MessageController {
     public String deleteMessage(
             @PathVariable("messageId") int messageId){
         messageService.setMessageToDelete(messageId);
+        return "redirect:/messages";
+    }
+    
+    @RequestMapping(value= "/messages/restore/{messageId}", method = RequestMethod.GET)
+    public String restoreMessage(
+            @PathVariable("messageId") int messageId){
+        messageService.restoreMessage(messageId);
+        return "redirect:/messages";
+    }
+    
+    @GetMapping("messages/finaldelete")
+    public String finallyDeleteSelectedMessages(HttpServletRequest servletRequest){
+        if (servletRequest.isUserInRole("ADMIN")) {
+            messageService.finallyDeleteSelectedMessages();
+        }
         return "redirect:/messages";
     }
     
