@@ -74,6 +74,7 @@ public class MessageController {
             shortList = messageService.listNotDeletedMessages(messageCountToShow, inOrder);
         }
         model.addAttribute("messages", shortList);
+        model.addAttribute("selectMessages", selectMessages);
         return "messages";
     }
     
@@ -141,9 +142,9 @@ public class MessageController {
         return false;
     }
     
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<String> handleErrors(EntityNotFoundException ex){
-        ResponseEntity<String> ret = new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-        return ret;
-    }
+//    @ExceptionHandler(EntityNotFoundException.class)
+//    public ResponseEntity<String> handleErrors(EntityNotFoundException ex){
+//        ResponseEntity<String> ret = new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+//        return ret;
+//    }
 }

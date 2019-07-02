@@ -5,7 +5,12 @@
  */
 package com.progmatic.messagesender;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,16 +19,14 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author progmatic
  */
-public class Message {
-    @NotNull
+@Entity
+public class Message implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
-    private static int previousId = 1;
     
     private String sender;
     
-    @NotNull
-    @Size(min = 1, message="Az üzenet nincs megírva!")
     private String text;
     
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
@@ -35,13 +38,11 @@ public class Message {
         this.sender = sender;
         this.text = text;
         this.sendingTime = sendingTime;
-        this.id = previousId ++;
         this.isDeleted = false;
     }
 
     public Message() {
         this.sendingTime = LocalDateTime.now();
-        this.id = previousId ++;
         this.isDeleted = false;
     }
     

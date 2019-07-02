@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ControllerAdvisor {
     
-    @ExceptionHandler(EntityNotFoundException.class)
-    public String handleErrors(EntityNotFoundException ex, Model model){
-        model.addAttribute("exceptionMessage", ex.getMessage());
-        return "error";
-    }
+//    @ExceptionHandler(EntityNotFoundException.class)
+//    public String handleErrors(EntityNotFoundException ex, Model model){
+//        model.addAttribute("exceptionMessage", ex.getMessage());
+//        return "error";
+//    }
 }

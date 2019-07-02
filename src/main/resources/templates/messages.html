@@ -5,7 +5,7 @@
     <title>Messages</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/messages_style.css">
+    <link rel="stylesheet" data-th-href="@{/css/messages_style.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -29,9 +29,9 @@
                     <div class="col-auto my-1">
                       <label class="mr-sm-2 sr-only" for="showDeletedOrNot">Preference</label>
                       <select class="custom-select mr-sm-2" id="showDeletedOrNot" name="selectMessages">
-                          <option selected value="all">Minden üzenet látható</option>
-                          <option value="notdeleted">Csak az érvényes üzenetek láthatók</option>
-                          <option value="deleted">Csak a törölt üzenetek láthatók</option>
+                          <option data-th-selected="${selectMessages == 'all'}" value="all">Minden üzenet látható</option>
+                          <option data-th-selected="${selectMessages == 'notdeleted'}" value="notdeleted">Csak az érvényes üzenetek láthatók</option>
+                          <option data-th-selected="${selectMessages == 'deleted'}" value="deleted">Csak a törölt üzenetek láthatók</option>
                       </select>
                     </div>
                     <div class="col-auto my-1">
