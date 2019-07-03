@@ -7,7 +7,9 @@ package com.progmatic.messagesender.controllers;
 
 import com.progmatic.messagesender.service.UserStatisticsService;
 import com.progmatic.messagesender.Message;
+import com.progmatic.messagesender.Topic;
 import com.progmatic.messagesender.service.MessageServiceImpl;
+import com.progmatic.messagesender.service.TopicServiceImpl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,11 +46,13 @@ public class MessageController {
     private final Logger logger = LoggerFactory.getLogger(MessageController.class);
     
     private MessageServiceImpl messageService;
+    private TopicServiceImpl topicService;
     private UserStatisticsService userStatistics;
 
     @Autowired
-    public MessageController(MessageServiceImpl msimpl, UserStatisticsService ustat ) {
+    public MessageController(MessageServiceImpl msimpl, TopicServiceImpl tsimpl, UserStatisticsService ustat ) {
         this.messageService = msimpl;
+        this.topicService = tsimpl;
         this.userStatistics = ustat;
     }
     
@@ -91,20 +95,27 @@ public class MessageController {
     @RequestMapping(value = "/messages/writenew", method = RequestMethod.GET)
     public String writeNewMessage(Model model){
         model.addAttribute("message", new Message("", "", LocalDateTime.now()));
+        List<Topic> allTopics = topicService.getAllTopics();
+        model.addAttribute("topics", allTopics );
         return "newmessageform";
     }
     
     @RequestMapping(value = "/messages/newmessage", method = RequestMethod.POST)
     public String createNewMessage(
             @Valid
-            @ModelAttribute("message") Message message, BindingResult bindingResult ){
+            @ModelAttribute("message") Message message, 
+            BindingResult bindingResult ){
+        
         if (bindingResult.hasErrors()) {
             return "newmessageform";
         }
+        
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         message.setSender(user.getUsername());
-        userStatistics.setUser(user.getUsername());
+        //message.setTopic(topic);
         messageService.addNewMessage(message);
+        
+        userStatistics.setUser(user.getUsername());
         userStatistics.addNewMessage(message);
         return "redirect:/messages";
     }

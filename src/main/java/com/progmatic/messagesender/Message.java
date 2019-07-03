@@ -49,6 +49,10 @@ public class Message implements Serializable {
         this.sendingTime = LocalDateTime.now();
         this.isDeleted = false;
     }
+
+    public Topic getTopic() {
+        return topic;
+    }
     
     public String getText() {
         return text;
@@ -93,6 +97,11 @@ public class Message implements Serializable {
     public boolean isIsDeleted() {
         return isDeleted;
     }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
+    }
+    
     
     
 }

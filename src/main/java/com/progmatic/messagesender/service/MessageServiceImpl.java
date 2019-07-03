@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 
 public class MessageServiceImpl {
     
-    private List<Message> messages;
+//    private List<Message> messages;
     
     @PersistenceContext
     EntityManager em;
@@ -55,7 +55,7 @@ public class MessageServiceImpl {
 //        messages.add(m7);
 //        messages.add(m8);
     }
-    
+    @Transactional
     public List<Message> listNotDeletedMessages(int messageCountToShow, boolean inOrder){
         
         List<Message> processedList = processListByConditions(messageCountToShow, inOrder, getNotDeletedMessages());

@@ -5,7 +5,7 @@
     <title>Write new message</title>
   	<meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="messages_style.css">
+    <link rel="stylesheet" data-th-href="@{/css/messages_style.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -15,19 +15,27 @@
         <div class="row" id="urlapok">
             <div class="col-6" id="newmessageform">
               <h2>Új üzenet írása</h2>
+              <a class="btn btn-warning" data-th-href="@{/messages/newtopicform}">Új topic</a>
+              
               <form method="POST" data-th-action="@{/messages/newmessage}" data-th-object="${message}">
+                    <div>
+                        <label class="mr-sm-2 mt-2" for="choiceOfTopic">Válassz topicot!</label>
+                        <select class="custom-select mr-sm-2" id="choiceOfTopic" data-th-field="*{topic.id}">
+                            <option data-th-each="topic: ${topics}" data-th-value="${topic.id}" data-th-text="${topic.title}"></option>
+                        </select>
+                    </div>
                   <!--<div>
                     <label for="input-sender">Az üzenet feladója:  </br></label>
                     <input type="text" id="input-sender" data-th-field="*{sender}" placeholder="Feladó"/>
                     <div data-th-if="${#fields.hasErrors('sender')}" data-th-errors="*{sender}">A név nincs kitöltve!</div>
                   </div>-->
-                  <div>
-                    <label for="write-text">Az üzenet szövege: </br></label>
-                    <textarea class="form-control" id="write-text" rows="3" placeholder="Ide írd az üzenetet"
-                    data-th-field="*{text}"></textarea>
-                    <div data-th-if="${#fields.hasErrors('text')}" data-th-errors="*{text}">Az üzenet nincs megírva!</div>
-                  </div>
-                  <input type="submit" id="send-button" value="Elküld"/>
+                    <div>
+                      <label for="write-text" class="mt-2">Az üzenet szövege: </br></label>
+                      <textarea class="form-control" id="write-text" rows="3" placeholder="Ide írd az üzenetet"
+                      data-th-field="*{text}"></textarea>
+                      <div data-th-if="${#fields.hasErrors('text')}" data-th-errors="*{text}">Az üzenet nincs megírva!</div>
+                    </div>
+                    <input class="mt-2" type="submit" id="send-button" value="Elküld"/>
               </form>
             </div>
       </div>

@@ -27,7 +27,49 @@ public class Topic implements Serializable {
     
     private String title;
     
-    @OneToMany
+    @OneToMany(mappedBy="topic")
     private List<Message> messages;
+
+    public Topic(String sender, String title) {
+        this.sender = sender;
+        this.title = title;
+    }
+
+    public Topic(){
+        
+    }
+    
+    public int getId() {
+        return id;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+    
     
 }

@@ -7,6 +7,7 @@ package com.progmatic.messagesender.controllers;
 
 import com.progmatic.messagesender.Message;
 import com.progmatic.messagesender.service.MessageServiceImpl;
+import com.progmatic.messagesender.service.TopicServiceImpl;
 import com.progmatic.messagesender.service.UserStatisticsService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class MessageControllerTest {
     
     MockMvc mockMvc;
     MessageServiceImpl messageService;
+    TopicServiceImpl topicService;
     @Mock UserStatisticsService userStatistics;
     
     public MessageControllerTest() {
@@ -54,9 +56,10 @@ public class MessageControllerTest {
         
         // egy hamis messageService és userStatistics osztály létrehozása a teszteléshez
         messageService = Mockito.mock(MessageServiceImpl.class);
+        topicService = Mockito.mock(TopicServiceImpl.class);
 //        userStatistics = Mockito.mock(UserStatisticsService.class);
 
-        mockMvc = MockMvcBuilders.standaloneSetup(new MessageController(messageService, userStatistics))
+        mockMvc = MockMvcBuilders.standaloneSetup(new MessageController(messageService, topicService, userStatistics))
                 .setViewResolvers(new InternalResourceViewResolver("", ".html"))
                 .build();
         
