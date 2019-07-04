@@ -61,25 +61,28 @@ public class MessageController {
             @RequestParam(value = "mc", defaultValue = "15") int messageCountToShow,
             @RequestParam(value = "order", defaultValue = "false") boolean inOrder,
             @RequestParam(value = "selectMessages", defaultValue = "notdeleted") String selectMessages,
+            @RequestParam(value = "topicChoice", defaultValue= "0" ) int topicId,
             HttpServletRequest servletRequest,
             Model model){
         List<Message> shortList = new ArrayList<>();
         if (servletRequest.isUserInRole("ADMIN")) {
             
             if (selectMessages.equals("deleted")) {
-                shortList = messageService.listDeletedMessages(messageCountToShow, inOrder);
+                shortList = messageService.listDeletedMessages(messageCountToShow, inOrder, topicId);
             } else if (selectMessages.equals("all")) {
-                shortList = messageService.listAllMessages(messageCountToShow, inOrder);
+                shortList = messageService.listAllMessages(messageCountToShow, inOrder, topicId);
             } else {
-                shortList = messageService.listNotDeletedMessages(messageCountToShow, inOrder);
+                shortList = messageService.listNotDeletedMessages(messageCountToShow, inOrder, topicId);
             }
             
         } else if (servletRequest.isUserInRole("USER")){
             
-            shortList = messageService.listNotDeletedMessages(messageCountToShow, inOrder);
+            shortList = messageService.listNotDeletedMessages(messageCountToShow, inOrder, topicId);
         }
         model.addAttribute("messages", shortList);
         model.addAttribute("selectMessages", selectMessages);
+        model.addAttribute("topics", topicService.getAllTopics());
+        model.addAttribute("topicChoice", topicId);
         return "messages";
     }
     

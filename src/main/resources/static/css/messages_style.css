@@ -35,3 +35,7 @@ form label {
 #errorimg {
     width: 50%;
 }
+
+.table-header {
+    background: rgba(255, 0, 0, 0.4); 
+}

@@ -71,9 +71,9 @@ public class MessageControllerTest {
         
         // megmondom, ha meghívja az adott metódust, mivel térjen vissza
         // a paraméterek beadása helyett írhatom egyenként: Mockito.anyInt(), stb
-        Mockito.when(messageService.listAllMessages(Mockito.anyInt(), Mockito.anyBoolean()))
+        Mockito.when(messageService.listAllMessages(Mockito.anyInt(), Mockito.anyBoolean(), Mockito.anyInt()))
                 .thenReturn(messagesToReturn);
-        Mockito.when(messageService.listNotDeletedMessages(Mockito.anyInt(), Mockito.anyBoolean()))
+        Mockito.when(messageService.listNotDeletedMessages(Mockito.anyInt(), Mockito.anyBoolean(), Mockito.anyInt()))
                 .thenReturn(messagesToReturn);
         Mockito.when(messageService.getSingleMessage(Mockito.anyInt()))
                 .thenReturn(messagesToReturn.get(0));

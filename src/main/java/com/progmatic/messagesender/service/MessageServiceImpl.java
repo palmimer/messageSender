@@ -7,11 +7,7 @@ package com.progmatic.messagesender.service;
 
 import com.progmatic.messagesender.Message;
 import com.progmatic.messagesender.SenderComparator;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -56,24 +52,24 @@ public class MessageServiceImpl {
 //        messages.add(m8);
     }
     @Transactional
-    public List<Message> listNotDeletedMessages(int messageCountToShow, boolean inOrder){
+    public List<Message> listNotDeletedMessages(int messageCountToShow, boolean inOrder, int topicId){
         
-        List<Message> processedList = processListByConditions(messageCountToShow, inOrder, getNotDeletedMessages());
+        List<Message> processedList = processListByConditions(messageCountToShow, inOrder, topicId, getNotDeletedMessages());
         return processedList;
     }
     
     @Transactional
-    public List<Message> listAllMessages(int messageCountToShow, boolean inOrder){
+    public List<Message> listAllMessages(int messageCountToShow, boolean inOrder, int topicId){
         
         List<Message> messages = getMessages();
         
-        List<Message> processedList = processListByConditions(messageCountToShow, inOrder, messages);
+        List<Message> processedList = processListByConditions(messageCountToShow, inOrder, topicId, messages);
         return processedList;
     }
     
-    public List<Message> listDeletedMessages(int messageCountToShow, boolean inOrder){
+    public List<Message> listDeletedMessages(int messageCountToShow, boolean inOrder, int topicId){
         List<Message> deletedMessages = getDeletedMessages();
-        List<Message> processedList = processListByConditions(messageCountToShow, inOrder, deletedMessages);
+        List<Message> processedList = processListByConditions(messageCountToShow, inOrder, topicId, deletedMessages);
         return processedList;
     }
     
@@ -81,7 +77,11 @@ public class MessageServiceImpl {
         return em.createQuery("SELECT m FROM Message m").getResultList();
     }
     
-    private List<Message> processListByConditions(int messageCountToShow, boolean inOrder, List<Message> list){
+    private List<Message> processListByConditions(int messageCountToShow, boolean inOrder, int topicId, List<Message> list){
+        if (topicId > 0) {
+            list = filterMessagesByTopic(topicId);
+        } 
+        
         if(messageCountToShow < 0) {
             messageCountToShow = list.size();
         }
@@ -198,6 +198,13 @@ public class MessageServiceImpl {
 //            }
 //        }
 //        return deletedMessages;
+    }
+    
+    @Transactional
+    private List<Message> filterMessagesByTopic(int topicId) {
+        return em.createQuery("SELECT m FROM Message m WHERE m.topic.id = :topicId")
+                .setParameter("topicId", topicId)
+                .getResultList();
     }
     
 }

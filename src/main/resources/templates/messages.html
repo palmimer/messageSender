@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Messages</title>
+    <title>Message sender</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" data-th-href="@{/css/messages_style.css}">
@@ -22,12 +22,12 @@
             <input type="submit" value="Logout">
       </form>
         
-      <div class="row">
+      <div class="row m-2">
           <a class="btn btn-warning" data-th-href="@{/messages/login}">Bejelentkezés</a>
             <form class="col form-inline" data-th-action="@{/messages/}" method="get" data-sec-authorize="hasRole('ADMIN')">
                 <div class="form-row align-items-center">
                     <div class="col-auto my-1">
-                      <label class="mr-sm-2 sr-only" for="showDeletedOrNot">Preference</label>
+                      <label class="mr-sm-2" for="showDeletedOrNot">Láthatóság</label>
                       <select class="custom-select mr-sm-2" id="showDeletedOrNot" name="selectMessages">
                           <option data-th-selected="${selectMessages == 'all'}" value="all">Minden üzenet látható</option>
                           <option data-th-selected="${selectMessages == 'notdeleted'}" value="notdeleted">Csak az érvényes üzenetek láthatók</option>
@@ -41,8 +41,22 @@
             </form>
           <a class="btn btn-success btn-right" data-th-href="@{/messages/register}">Regisztráció</a>
       </div>
+        
+      <div class="row" id="topicfilterchoice">
+          <div class="col-8">
+            <form class="form-inline" method="GET" data-th-action="@{/messages/}" data-th-object="${topic}">
+                <label class="mt-2 mr-2" for="choiceOfTopicFilter">Szűrés topic szerint: </label>
+                <select class="custom-select mx-2" id="choiceOfTopicFilter" name="topicChoice">
+                    <option value="0">Nincs</option>
+                    <option data-th-each="topic: ${topics}" data-th-value="${topic.id}" data-th-text="${topic.title}"></option>
+                </select>
+                <button type="submit" class="btn btn-outline-dark mx-2">Választ</button>
+            </form>
+          </div>
+            
+      </div>
       <table class="table table-striped">
-        <thead>
+        <thead class="table-header">
           <tr>
             <td>ID</td>  
             <td>Sender</td>

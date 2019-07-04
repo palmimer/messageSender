@@ -7,10 +7,15 @@ package com.progmatic.messagesender;
 
 import java.io.Serializable;
 import java.util.List;
+import static javax.persistence.CascadeType.REMOVE;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
 
 /**
@@ -18,6 +23,13 @@ import javax.persistence.OneToMany;
  * @author progmatic
  */
 @Entity
+@NamedEntityGraphs(
+    @NamedEntityGraph(
+            name = "topicsWithMessages",
+            attributeNodes = {
+            @NamedAttributeNode(value = "messages")
+            }
+    ))
 public class Topic implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +37,10 @@ public class Topic implements Serializable {
     
     private String sender;
     
+    @Column(unique = true)
     private String title;
     
-    @OneToMany(mappedBy="topic")
+    @OneToMany(cascade=REMOVE, mappedBy="topic")
     private List<Message> messages;
 
     public Topic(String sender, String title) {

@@ -34,4 +34,18 @@ public class TopicServiceImpl {
     public void addNewTopic(Topic topic){
         em.persist(topic);
     }
+    
+    @Transactional
+    public Topic getTopicById(int topicId){
+        return em.find(Topic.class, topicId);
+    }
+    
+    public List<Message> getMessagesOfTopic(int topicId){
+        return em.createQuery("SELECT t FROM Topic t JOIN FETCH T.messages WHERE t.id = :id")
+                .setParameter("id", topicId)
+                .getResultList();
+        
+    }
+    
+    
 }

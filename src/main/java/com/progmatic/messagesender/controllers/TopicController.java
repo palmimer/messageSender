@@ -9,6 +9,9 @@ import com.progmatic.messagesender.Message;
 import com.progmatic.messagesender.Topic;
 import com.progmatic.messagesender.service.TopicServiceImpl;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -18,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -52,4 +56,9 @@ public class TopicController {
         return "redirect:/messages/writenew";
     }
     
+    @RequestMapping(value = "/topics", method = RequestMethod.GET)
+    public String listMessages( Model model){
+        model.addAttribute("topics", topicService.getAllTopics());
+        return "topics";
+    }
 }
