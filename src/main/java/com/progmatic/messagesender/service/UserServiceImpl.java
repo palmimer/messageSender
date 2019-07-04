@@ -41,11 +41,17 @@ public class UserServiceImpl implements UserDetailsService {
     }
     
     public void createUser(RegistrationDTO registration) throws AlreadyExistsException{
+        if (userExists(registration.getUserName())) {
+            throw new AlreadyExistsException();
+        } else {
+            em.persist(registration);
+        }
         
     }
     
     public boolean userExists(String username){
-        return true;
+        
+        return em.contains(username);
     }
     
     

@@ -45,7 +45,7 @@ public class RegisteredUser implements UserDetails, Serializable {
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
     private LocalDateTime registrationTime;
     
-    @OneToMany(mappedBy="authority")
+    @OneToMany(mappedBy="user")
     private List<Authority> authorities;
     
     @OneToMany(mappedBy="sender")
