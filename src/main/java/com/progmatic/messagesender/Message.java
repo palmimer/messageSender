@@ -26,7 +26,8 @@ public class Message implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    private String sender;
+    @ManyToOne
+    private RegisteredUser sender;
     
     private String text;
     
@@ -38,7 +39,7 @@ public class Message implements Serializable {
     @ManyToOne
     private Topic topic;
 
-    public Message( String sender, String text, LocalDateTime sendingTime) {
+    public Message( RegisteredUser sender, String text, LocalDateTime sendingTime) {
         this.sender = sender;
         this.text = text;
         this.sendingTime = sendingTime;
@@ -58,7 +59,7 @@ public class Message implements Serializable {
         return text;
     }
     
-    public String getSender() {
+    public RegisteredUser getSender() {
         return sender;
     }
 
@@ -74,7 +75,7 @@ public class Message implements Serializable {
         this.id = id;
     }
     
-    public void setSender(String sender) {
+    public void setSender(RegisteredUser sender) {
         this.sender = sender;
     }
 

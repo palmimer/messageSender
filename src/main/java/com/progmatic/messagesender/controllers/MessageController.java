@@ -7,6 +7,7 @@ package com.progmatic.messagesender.controllers;
 
 import com.progmatic.messagesender.service.UserStatisticsService;
 import com.progmatic.messagesender.Message;
+import com.progmatic.messagesender.RegisteredUser;
 import com.progmatic.messagesender.Topic;
 import com.progmatic.messagesender.service.MessageServiceImpl;
 import com.progmatic.messagesender.service.TopicServiceImpl;
@@ -97,7 +98,7 @@ public class MessageController {
     
     @RequestMapping(value = "/messages/writenew", method = RequestMethod.GET)
     public String writeNewMessage(Model model){
-        model.addAttribute("message", new Message("", "", LocalDateTime.now()));
+        model.addAttribute("message", new Message());
         List<Topic> allTopics = topicService.getAllTopics();
         model.addAttribute("topics", allTopics );
         return "newmessageform";
@@ -113,8 +114,8 @@ public class MessageController {
             return "newmessageform";
         }
         
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        message.setSender(user.getUsername());
+        RegisteredUser user = (RegisteredUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        message.setSender(user);
         //message.setTopic(topic);
         messageService.addNewMessage(message);
         
@@ -152,7 +153,7 @@ public class MessageController {
         // a vizsgált felhasználó új üzeneteinek száma
         model.addAttribute("countOfNewMessagesOfUser", userStatistics.countMessagesOfUser(userStatistics.getUser())) ;
         // felhasználónevek a munkamenetben
-        model.addAttribute("usernames", userStatistics.getUserNamesInSession());
+        model.addAttribute("usernames", userStatistics.getUsersInSession());
         // felhasználónevek száma a munkamenetben
         model.addAttribute("countOfUsers", userStatistics.countUsersInSession());
         // az összes üzenet száma a munkamenetben

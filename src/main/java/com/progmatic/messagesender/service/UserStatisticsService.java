@@ -6,6 +6,7 @@
 package com.progmatic.messagesender.service;
 
 import com.progmatic.messagesender.Message;
+import com.progmatic.messagesender.RegisteredUser;
 import com.progmatic.messagesender.UserStatistics;
 import com.progmatic.messagesender.controllers.MessageController;
 import com.progmatic.messagesender.service.MessageServiceImpl;
@@ -64,7 +65,7 @@ public class UserStatisticsService {
                 .count();
     }
     
-    public List<String> getUserNamesInSession(){
+    public List<RegisteredUser> getUsersInSession(){
         return newMessagesInSession.stream()
                 .map(message -> message.getSender())
                 .distinct()
@@ -72,7 +73,7 @@ public class UserStatisticsService {
     }
     
     public int countUsersInSession(){
-        return getUserNamesInSession().size();
+        return getUsersInSession().size();
     }
     
     public void addNewMessage(Message m){
@@ -82,8 +83,9 @@ public class UserStatisticsService {
     public void logMessageStatisticsInSession(){
         String countOfNewMessages = String.valueOf(countMessagesInSession());
         String countOfUsers = String.valueOf(countUsersInSession());
-        List<String> names = getUserNamesInSession();
-        logger.info(countOfNewMessages, countOfUsers, names ) ;
+//        List<String> names = getUsersInSession().stream()
+//                .;
+//        logger.info(countOfNewMessages, countOfUsers, names ) ;
     }
     
     

@@ -64,19 +64,19 @@ public class MessageControllerTest {
                 .build();
         
         // tesztüzenetek létrehozása
-        List<Message> messagesToReturn = new ArrayList<>();
-        messagesToReturn.add(new Message("Ctesztküldő3", "Ctesztüzenet3", LocalDateTime.now()));
-        messagesToReturn.add(new Message("Atesztküldő1", "Atesztüzenet1", LocalDateTime.now()));
-        messagesToReturn.add(new Message("Btesztküldő2", "Btesztüzenet2", LocalDateTime.now()));
-        
-        // megmondom, ha meghívja az adott metódust, mivel térjen vissza
-        // a paraméterek beadása helyett írhatom egyenként: Mockito.anyInt(), stb
-        Mockito.when(messageService.listAllMessages(Mockito.anyInt(), Mockito.anyBoolean(), Mockito.anyInt()))
-                .thenReturn(messagesToReturn);
-        Mockito.when(messageService.listNotDeletedMessages(Mockito.anyInt(), Mockito.anyBoolean(), Mockito.anyInt()))
-                .thenReturn(messagesToReturn);
-        Mockito.when(messageService.getSingleMessage(Mockito.anyInt()))
-                .thenReturn(messagesToReturn.get(0));
+//        List<Message> messagesToReturn = new ArrayList<>();
+//        messagesToReturn.add(new Message("Ctesztküldő3", "Ctesztüzenet3", LocalDateTime.now()));
+//        messagesToReturn.add(new Message("Atesztküldő1", "Atesztüzenet1", LocalDateTime.now()));
+//        messagesToReturn.add(new Message("Btesztküldő2", "Btesztüzenet2", LocalDateTime.now()));
+//        
+//        // megmondom, ha meghívja az adott metódust, mivel térjen vissza
+//        // a paraméterek beadása helyett írhatom egyenként: Mockito.anyInt(), stb
+//        Mockito.when(messageService.listAllMessages(Mockito.anyInt(), Mockito.anyBoolean(), Mockito.anyInt()))
+//                .thenReturn(messagesToReturn);
+//        Mockito.when(messageService.listNotDeletedMessages(Mockito.anyInt(), Mockito.anyBoolean(), Mockito.anyInt()))
+//                .thenReturn(messagesToReturn);
+//        Mockito.when(messageService.getSingleMessage(Mockito.anyInt()))
+//                .thenReturn(messagesToReturn.get(0));
     }
 
     @Test
