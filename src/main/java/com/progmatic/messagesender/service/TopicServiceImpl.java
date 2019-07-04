@@ -8,9 +8,11 @@ package com.progmatic.messagesender.service;
 import com.progmatic.messagesender.Message;
 import com.progmatic.messagesender.Topic;
 import java.util.List;
+import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import static org.hibernate.jpa.QueryHints.HINT_LOADGRAPH;
 import org.springframework.stereotype.Service;
 
 /**
@@ -40,10 +42,13 @@ public class TopicServiceImpl {
         return em.find(Topic.class, topicId);
     }
     
-    public List<Message> getMessagesOfTopic(int topicId){
-        return em.createQuery("SELECT t FROM Topic t JOIN FETCH T.messages WHERE t.id = :id")
+    public Topic getTopicWithMessages(int topicId){
+        
+        EntityGraph eg = em.getEntityGraph("topicsWithMessages");
+        return em.createQuery("SELECT t FROM Topic t WHERE t.id = :id", Topic.class)
                 .setParameter("id", topicId)
-                .getResultList();
+                .setHint(HINT_LOADGRAPH, eg)
+                .getSingleResult();
         
     }
     

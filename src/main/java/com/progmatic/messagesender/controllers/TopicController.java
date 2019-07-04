@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,5 +61,15 @@ public class TopicController {
     public String listMessages( Model model){
         model.addAttribute("topics", topicService.getAllTopics());
         return "topics";
+    }
+    
+    @RequestMapping(value = "/topics/{topic.id}", method = RequestMethod.GET)
+    public String showSingleMessage(
+            @PathVariable("topic.id") int topicId, 
+            Model model){
+        Topic topic = topicService.getTopicWithMessages(topicId);
+        
+        model.addAttribute("topic", topic);
+        return "messagesoftopic";
     }
 }

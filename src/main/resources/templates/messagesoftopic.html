@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    
+  <head>
+    <meta charset="utf-8">
+    <title>Message sender: Messages of a topic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" data-th-href="@{/css/messages_style.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </head>
+  
+  <body>
+      
+    <div class="container">
+        <div class="row" id="felsosor">
+            <div class="col">
+                <h2>Topic</h2>
+                <table class="table table-striped col-6" data-th-object="${topic}">
+                    <tr>
+                        <td>Cím: </td>
+                        <td data-th-text="${topic.title}"></td>
+                    </tr>
+                    <tr>
+                        <td>Szerző: </td>
+                        <td data-th-text="${topic.sender}"></td>
+                    </tr>
+                    <tr>
+                        <td>Azonosító: </td>
+                        <td data-th-text="${topic.id}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row" id="felsosor">
+            <div class="col text-center">
+                <h2>Messages</h2>
+            </div>
+        </div>
+        <table class="table table-striped">
+        <thead class="table-header">
+          <tr>
+            <td>ID</td>  
+            <td>Sender</td>
+            <td>Message</td>
+            <td>Time</td>
+            <td data-sec-authorize="hasRole('ADMIN')">Status</td>
+            <td data-sec-authorize="hasRole('ADMIN')">Delete</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-th-each="message: ${topic.messages}">
+            <td><a data-th-href="@{'/messages/' + ${message.id}}" data-th-text="${message.id}"></a></td>
+            <td data-th-text="${message.sender}"></td>
+            <td data-th-text="${message.text}"></td>
+            <td data-th-text="${{message.sendingTime}}"></td>
+            <td data-sec-authorize="hasRole('ADMIN')" data-th-text="${message.isDeleted}? 'törölve'" >
+                
+            </td>
+            <td data-sec-authorize="hasRole('ADMIN')">
+                <a class="btn btn-secondary" data-th-if="${!message.isDeleted}" data-th-href="@{'/messages/delete/' + ${message.id}}">Törlés</a>
+                <a class="btn btn-light btn-sm" data-th-if="${message.isDeleted}" data-th-href="@{'/messages/restore/' + ${message.id}}">Visszavonás</a>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+    
+  </div>
+
+  </body>
+</html>
