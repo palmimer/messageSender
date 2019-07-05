@@ -9,6 +9,6 @@ package com.progmatic.messagesender.service;
  *
  * @author progmatic
  */
-class AlreadyExistsException extends Exception {
+public class AlreadyExistsException extends Exception {
     
 }

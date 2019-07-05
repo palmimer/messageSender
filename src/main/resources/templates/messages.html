@@ -103,7 +103,7 @@
         <tbody>
           <tr data-th-each="message: ${messages}">
             <td><a data-th-href="@{'/messages/' + ${message.id}}" data-th-text="${message.id}"></a></td>
-            <td data-th-text="${message.sender}"></td>
+            <td data-th-text="${message.sender.username}"></td>
             <td data-th-text="${message.topic.title}"></td>
             <td data-th-text="${message.text}"></td>
             <td data-th-text="${{message.sendingTime}}"></td>

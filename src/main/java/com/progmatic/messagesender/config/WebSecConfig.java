@@ -42,7 +42,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .and()
                   
                 .authorizeRequests()
-                .antMatchers("/messages", "/login", "/css/*" ).permitAll()
+                .antMatchers("/messages", "/messages/login", "/css/*" ).permitAll()
                 .antMatchers("/messages/register", "/messages/newregistration").permitAll()
                 // ezt az oldalt csak bejelentkezett felhasználó érheti el
                 //.antMatchers("/messages/writenew").access("hasRole('USER') or hasRole('ADMIN')")
@@ -51,16 +51,16 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
     
     
     
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("Merci")
-                .password("merci").roles("USER").build());
-        manager.createUser(User.withUsername("admin")
-                .password("pw").roles("ADMIN").build());
-        return manager;
-    }
+//    @Bean
+//    @Override
+//    public UserDetailsService userDetailsService() {
+//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+//        manager.createUser(User.withUsername("Merci")
+//                .password("merci").roles("USER").build());
+//        manager.createUser(User.withUsername("admin")
+//                .password("pw").roles("ADMIN").build());
+//        return manager;
+//    }
     
     @SuppressWarnings("deprecation")
     @Bean

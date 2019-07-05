@@ -27,8 +27,8 @@ public class Authority implements GrantedAuthority {
     
     private String authority;
     
-    @ManyToOne
-    private List<RegisteredUser> registeredUsers;
+//    @ManyToOne
+//    private List<RegisteredUser> registeredUsers;
     
     
     @Override
@@ -44,12 +44,16 @@ public class Authority implements GrantedAuthority {
         this.id = id;
     }
 
-    public List<RegisteredUser> getRegisteredUsers() {
-        return registeredUsers;
-    }
+//    public List<RegisteredUser> getRegisteredUsers() {
+//        return registeredUsers;
+//    }
+//
+//    public void setRegisteredUsers(List<RegisteredUser> registeredUsers) {
+//        this.registeredUsers = registeredUsers;
+//    }
 
-    public void setRegisteredUsers(List<RegisteredUser> registeredUsers) {
-        this.registeredUsers = registeredUsers;
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
     
     

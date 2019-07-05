@@ -11,9 +11,11 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,7 +31,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @NamedQuery(
         name = "loaduserbyusername",
-        query = "SELECT u FROM User u WHERE u.userName LIKE :userName"
+        query = "SELECT u FROM RegisteredUser u WHERE u.username LIKE :username"
     )
 public class RegisteredUser implements UserDetails, Serializable {
     @Id
@@ -37,7 +39,7 @@ public class RegisteredUser implements UserDetails, Serializable {
     private int id;
     
     @Column(unique = true)
-    private String userName;
+    private String username;
     
     private String password;
     private String email;
@@ -45,13 +47,19 @@ public class RegisteredUser implements UserDetails, Serializable {
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
     private LocalDateTime registrationTime;
     
-    @OneToMany(mappedBy="user")
+    @ManyToMany (fetch = FetchType.EAGER)
     private List<Authority> authorities;
     
     @OneToMany(mappedBy="sender")
     private List<Message> messages;
 
-    public RegisteredUser(String username, String password, String email, Collection<? extends GrantedAuthority> authorities) {
+    public RegisteredUser() {
+        this.registrationTime = LocalDateTime.now();
+    }
+
+    public RegisteredUser(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
         this.email = email;
         this.registrationTime = LocalDateTime.now();
     }
@@ -60,6 +68,7 @@ public class RegisteredUser implements UserDetails, Serializable {
         return id;
     }
 
+    
     @Override
     public String getPassword() {
         return this.password;
@@ -67,7 +76,7 @@ public class RegisteredUser implements UserDetails, Serializable {
 
     @Override
     public String getUsername() {
-        return this.userName;
+        return this.username;
     }
 
     
@@ -88,7 +97,7 @@ public class RegisteredUser implements UserDetails, Serializable {
     }
 
     public void setName(String name) {
-        this.userName = name;
+        this.username = name;
     }
 
     public void setPassword(String password) {
@@ -98,33 +107,45 @@ public class RegisteredUser implements UserDetails, Serializable {
     public void setRegistrationTime(LocalDateTime registrationTime) {
         this.registrationTime = registrationTime;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
     
     
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return authorities;
     }
 
     
     @Override
     public boolean isAccountNonExpired() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
     

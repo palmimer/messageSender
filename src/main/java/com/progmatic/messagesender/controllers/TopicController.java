@@ -6,6 +6,7 @@
 package com.progmatic.messagesender.controllers;
 
 import com.progmatic.messagesender.Message;
+import com.progmatic.messagesender.RegisteredUser;
 import com.progmatic.messagesender.Topic;
 import com.progmatic.messagesender.service.TopicServiceImpl;
 import java.time.LocalDateTime;
@@ -51,7 +52,7 @@ public class TopicController {
         if (bindingResult.hasErrors()) {
             return "newtopicform";
         }
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        RegisteredUser user = (RegisteredUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         topic.setSender(user.getUsername());
         topicService.addNewTopic(topic);
         return "redirect:/messages/writenew";
