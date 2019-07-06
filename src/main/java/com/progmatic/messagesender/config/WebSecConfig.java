@@ -49,8 +49,6 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
     }
     
-    
-    
 //    @Bean
 //    @Override
 //    public UserDetailsService userDetailsService() {

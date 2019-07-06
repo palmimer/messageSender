@@ -96,7 +96,7 @@ public class MessageServiceImpl {
     }
     
     @Transactional
-    private List<Message> getNotDeletedMessages(){
+    public List<Message> getNotDeletedMessages(){
         return em.createQuery("SELECT m FROM Message m WHERE m.isDeleted = :isDeleted")
                 .setParameter("isDeleted", false)
                 .getResultList();

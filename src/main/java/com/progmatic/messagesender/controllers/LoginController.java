@@ -51,7 +51,7 @@ public class LoginController {
             @Valid
             @ModelAttribute("registration") RegistrationDTO registration, BindingResult bindingResult){
         
-        if ( bindingResult.hasErrors() || !isRegistrationValid(registration, bindingResult)) {
+        if ( bindingResult.hasErrors() & !isRegistrationValid(registration, bindingResult)) {
             return "register";
         }
 //        List<Authority> userAuthorities = new ArrayList<>();

@@ -13,7 +13,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import static org.hibernate.jpa.QueryHints.HINT_LOADGRAPH;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.progmatic.messagesender.repository.CustomTopicRepositoryImpl;
+import com.progmatic.messagesender.repository.TopicRepository;
 
 /**
  *
@@ -22,35 +25,44 @@ import org.springframework.stereotype.Service;
 @Service
 public class TopicServiceImpl {
     
-    @PersistenceContext
-    EntityManager em;
+    private TopicRepository topicRepository;
+
+    @Autowired
+    public TopicServiceImpl(TopicRepository tr) {
+        this.topicRepository = tr;
+    }
     
-    @Transactional
+    
     public List<Topic> getAllTopics(){
         
-        List<Topic> topics = em.createQuery("SELECT t FROM Topic t").getResultList();
+        List<Topic> topics = topicRepository.findAll();
         return topics;
     }
     
     @Transactional
-    public void addNewTopic(Topic topic){
-        em.persist(topic);
+    public void addNewTopic(Topic topic) throws AlreadyExistsException{
+        if (topicRepository.existsByTitle(topic.getTitle())) {
+            throw new AlreadyExistsException("Topic with title: " + topic.getTitle() + " already exists.");
+        }
+        topicRepository.save(topic);
     }
     
-    @Transactional
+    
     public Topic getTopicById(int topicId){
-        return em.find(Topic.class, topicId);
+        return topicRepository.findById(topicId).get();
     }
     
     public Topic getTopicWithMessages(int topicId){
         
-        EntityGraph eg = em.getEntityGraph("topicsWithMessages");
-        return em.createQuery("SELECT t FROM Topic t WHERE t.id = :id", Topic.class)
-                .setParameter("id", topicId)
-                .setHint(HINT_LOADGRAPH, eg)
-                .getSingleResult();
-        
+        return topicRepository.getTopicWithMessages(topicId);
     }
     
+    public Topic getTopicByTitle(String title){
+        return topicRepository.findByTitle(title);
+    }
     
+   
+    
+    
+            
 }

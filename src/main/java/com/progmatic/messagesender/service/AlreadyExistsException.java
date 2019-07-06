@@ -10,5 +10,9 @@ package com.progmatic.messagesender.service;
  * @author progmatic
  */
 public class AlreadyExistsException extends Exception {
+
+    AlreadyExistsException(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

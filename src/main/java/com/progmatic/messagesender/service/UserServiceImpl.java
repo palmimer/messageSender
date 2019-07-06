@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserDetailsService {
     @Transactional
     public void createUser(RegistrationDTO registration) throws AlreadyExistsException{
         if (userExists(registration.getUserName())) {
-            throw new AlreadyExistsException();
+            throw new AlreadyExistsException("Ez a felhasználónév már létezik (" + registration.getUserName() + ")");
         } else {
             Authority authority = getAuthority("ROLE_USER");
             RegisteredUser newUser = new RegisteredUser(

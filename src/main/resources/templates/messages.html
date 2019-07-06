@@ -30,13 +30,13 @@
             </li>
             
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" data-th-href="@{/messages/topic/}" 
+                 id="navbarDropdownTopicChoice" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Szűrés topic szerint
               </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownTopicChoice" data-th-object="${topic}">
+                <a class="dropdown-item" data-th-href="@{/messages/topic/0}">Nincs</a>
+                <a class="dropdown-item" data-th-each="topic: ${topics}" data-th-href="@{'/messages/topic/' + ${topic.id}}" data-th-text="${topic.title}"></a>
               </div>
             </li>
             <li class="nav-item">
@@ -52,9 +52,7 @@
           <h2>Messages</h2>
         </div>
       </div>
-      <form data-th-action="@{/logout}" method="post">
-            <input type="submit" value="Logout">
-      </form>
+      
         
       <div class="row m-2">
           <form class="col form-inline" data-th-action="@{/messages/}" method="get" data-sec-authorize="hasRole('ADMIN')">
@@ -72,10 +70,9 @@
                     </div>
                 </div>
             </form>
-          <a class="btn btn-success btn-right" data-th-href="@{/messages/register}">Regisztráció</a>
       </div>
         
-      <div class="row" id="topicfilterchoice">
+      <!--<div class="row" id="topicfilterchoice">
           <div class="col-8">
             <form class="form-inline" method="GET" data-th-action="@{/messages/}" data-th-object="${topic}">
                 <label class="mt-2 mr-2" for="choiceOfTopicFilter">Szűrés topic szerint: </label>
@@ -86,8 +83,8 @@
                 <button type="submit" class="btn btn-outline-dark mx-2">Választ</button>
             </form>
           </div>
-            
-      </div>
+      </div> -->
+      
       <table class="table table-striped">
         <thead class="table-header">
           <tr>

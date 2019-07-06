@@ -8,6 +8,7 @@ package com.progmatic.messagesender.controllers;
 import com.progmatic.messagesender.Message;
 import com.progmatic.messagesender.RegisteredUser;
 import com.progmatic.messagesender.Topic;
+import com.progmatic.messagesender.service.AlreadyExistsException;
 import com.progmatic.messagesender.service.TopicServiceImpl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class TopicController {
     @RequestMapping(value = "/messages/newtopic", method = RequestMethod.POST)
     public String createNewTopic(
             @Valid
-            @ModelAttribute("topic") Topic topic, BindingResult bindingResult ){
+            @ModelAttribute("topic") Topic topic, BindingResult bindingResult ) throws AlreadyExistsException{
         
         if (bindingResult.hasErrors()) {
             return "newtopicform";
@@ -59,13 +60,13 @@ public class TopicController {
     }
     
     @RequestMapping(value = "/topics", method = RequestMethod.GET)
-    public String listMessages( Model model){
+    public String listTopics( Model model){
         model.addAttribute("topics", topicService.getAllTopics());
         return "topics";
     }
     
     @RequestMapping(value = "/topics/{topic.id}", method = RequestMethod.GET)
-    public String showSingleMessage(
+    public String showMessagesOfTopic(
             @PathVariable("topic.id") int topicId, 
             Model model){
         Topic topic = topicService.getTopicWithMessages(topicId);
@@ -73,4 +74,19 @@ public class TopicController {
         model.addAttribute("topic", topic);
         return "messagesoftopic";
     }
+    
+    @RequestMapping(value = "/messages/topic/{topic.id}", method = RequestMethod.GET)
+    public String listMessagesOfTopic(
+            @PathVariable("topic.id") int topicId, 
+            Model model){
+        if (topicId > 0) {
+            Topic topic = topicService.getTopicWithMessages(topicId);
+            model.addAttribute("messages", topic.getMessages());
+            model.addAttribute("topic", topic);
+            return "messages";
+        } else {
+            return "redirect:/messages";
+        }
+    }
+    
 }
