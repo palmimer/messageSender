@@ -17,22 +17,34 @@ and open the template in the editor.
     <body>
         <div class="container">
 
-        <div class="col-md-6 col-lg-8 m-auto">
-            <div class="card mt-3">
-                <div class="card-title ml-3">
-                    <div class="row mt-2 mr-2">
-                        <div class="col-6 h4 pt-1 text-left" data-th-text="${message.sender}">Sender name</div>
-                            <div class="col-6 h3 text-right" data-th-text="${message.id}">ID</div>
+            <div class="col-md-6 col-lg-8 m-auto">
+                <div class="card mt-3">
+                    <div class="card-title ml-3">
+                        <div class="row mt-2 mr-2">
+                            <div class="col-6 h4 pt-1 text-left" data-th-text="${message.sender.username}"></div>
+                                <div class="col-6 h3 text-right" data-th-text="${message.id}"></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text" data-th-text="${message.text}"></p>
+                        <a data-th-href="@{'/messages/'  + ${message.id} + '/writecomment'}" class="btn btn-primary btn-sm">Válasz</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <p data-th-text="${{message.sendingTime}}"></p>
+                        <a class="btn btn-secondary btn-sm align-item-right"
+                           data-toggle="collapse" href="#showcomment" role="button" 
+                           aria-expanded="false" aria-controls="showcomment" 
+                           data-th-text="'Mutasd a kommenteket (' + ${message.numberOfComments} + ')'">
+                        </a>
                     </div>
                 </div>
-  		<div class="card-body">
-                    <p class="card-text" data-th-text="${message.text}">Message text: With supporting text below as a natural lead-in to additional content.</p>
-                    <a data-th-href="@{/messages/writenew}" class="btn btn-primary">Válasz</a>
-  		</div>
-  		<div class="card-footer text-muted" data-th-text="${{message.sendingTime}}">2018-12-21 10:10</div>
-  	    </div>
-  	</div>
-
-      </div>
+            </div>
+            <div class="collapse" id="showcomment" data-th-each="comment: ${message.comments}">
+                <div class="card mt-3">    
+                    <div class="card-title ml-3" data-th-text="${comment.sender.username}"></div>
+                    <div  class="card card-body" data-th-text="${comment.text}"></div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

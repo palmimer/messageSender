@@ -6,6 +6,7 @@
 package com.progmatic.messagesender.service;
 
 import com.progmatic.messagesender.Message;
+import com.progmatic.messagesender.RegisteredUser;
 import com.progmatic.messagesender.SenderComparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -113,11 +115,10 @@ public class MessageServiceImpl {
     public Message getSingleMessage(int messageId){
 //        Map<Integer, Message> messagesWithIds = makeMapWithIds();
 //        return messagesWithIds.get(messageId);
-        return em.find(Message.class, messageId);
-                
-//                .createQuery("SELECT m FROM Message m WHERE m.id = :id")
-//                .setParameter("id", messageId)
-//                .getSingleResult();
+        return em
+                .createNamedQuery("loadmessagebyid", Message.class)
+                .setParameter("id", messageId)
+                .getSingleResult();
         
     }
     
@@ -127,7 +128,22 @@ public class MessageServiceImpl {
 //        messages.add(message);
     }
     
+    @Transactional
+    public void setMessageAsCommented(Message message) {
+        message.setIsCommented(true);
+    }
     
+    @Transactional
+    public void createNewComment(int parentMessageId, Message comment){
+        Message messageToUpdate = getSingleMessage(parentMessageId);
+        setMessageAsCommented(messageToUpdate);
+        
+        RegisteredUser user = (RegisteredUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        comment.setSender(user);
+        comment.setTopic(messageToUpdate.getTopic());
+        comment.setParent(messageToUpdate);
+        addNewMessage(comment);
+    }
     
     @Transactional
     public void setMessageToDelete(int messageId){
@@ -143,9 +159,7 @@ public class MessageServiceImpl {
     @Transactional
     public void finallyDeleteSelectedMessages(){
         List<Message> toDelete = getDeletedMessages();
-        for (Message message : toDelete) {
-            deleteMessage(message.getId());
-        }
+        ;
     }
     
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -205,6 +219,11 @@ public class MessageServiceImpl {
         return em.createQuery("SELECT m FROM Message m WHERE m.topic.id = :topicId")
                 .setParameter("topicId", topicId)
                 .getResultList();
+    }
+    
+    @Transactional
+    public int getNumberOfComments(Message message){
+        return message.getComments().size();
     }
     
 }

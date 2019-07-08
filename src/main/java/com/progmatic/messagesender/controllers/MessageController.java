@@ -20,8 +20,6 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -93,6 +91,7 @@ public class MessageController {
         
         Message singleMessageToShow = messageService.getSingleMessage(messageId);
         model.addAttribute("message", singleMessageToShow);
+        model.addAttribute("comments", singleMessageToShow.getComments());
         return "singlemessage";
     }
     
@@ -122,6 +121,34 @@ public class MessageController {
         userStatistics.setUser(user.getUsername());
         userStatistics.addNewMessage(message);
         return "redirect:/messages";
+    }
+    
+    @RequestMapping(value = "/messages/{message.id}/writecomment", method = RequestMethod.GET)
+    public String writeComment(
+            @PathVariable("message.id") int messageId,
+            Model model){
+        Message message = messageService.getSingleMessage(messageId);
+        model.addAttribute("message", message);
+        model.addAttribute("comment", new Message());
+        return "newcommentform";
+    }
+    
+    
+    @RequestMapping(value = "/messages/{message.id}/newcomment", method = RequestMethod.POST)
+    public String createNewComment(
+            @PathVariable("message.id") int messageId,
+            @ModelAttribute("comment") Message comment,
+            BindingResult bindingResult ){
+        
+        if (bindingResult.hasErrors()) {
+            return "newcommentform";
+        }
+        messageService.createNewComment(messageId, comment);
+        
+        RegisteredUser user = (RegisteredUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        userStatistics.setUser(user.getUsername());
+        userStatistics.addNewMessage(comment);
+        return "redirect:/messages/" + messageId;
     }
     
     @RequestMapping(value= "/messages/delete/{messageId}", method = RequestMethod.GET)

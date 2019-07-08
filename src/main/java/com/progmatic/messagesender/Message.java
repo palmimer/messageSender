@@ -7,11 +7,16 @@ package com.progmatic.messagesender;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,6 +26,10 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author progmatic
  */
 @Entity
+@NamedQuery(
+        name = "loadmessagebyid",
+        query = "SELECT m FROM Message m WHERE m.id = :id"
+    )
 public class Message implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +47,14 @@ public class Message implements Serializable {
     
     @ManyToOne
     private Topic topic;
+    
+    private boolean isCommented;
+    
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
+    List<Message> comments;
+    
+    @ManyToOne
+    private Message parent;
 
     public Message( RegisteredUser sender, String text, LocalDateTime sendingTime) {
         this.sender = sender;
@@ -49,6 +66,7 @@ public class Message implements Serializable {
     public Message() {
         this.sendingTime = LocalDateTime.now();
         this.isDeleted = false;
+        this.isCommented = false;
     }
 
     public Topic getTopic() {
@@ -69,6 +87,10 @@ public class Message implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public List<Message> getComments() {
+        return comments;
     }
     
     public void setId(int id) {
@@ -101,6 +123,34 @@ public class Message implements Serializable {
 
     public void setTopic(Topic topic) {
         this.topic = topic;
+    }
+
+    public boolean isIsCommented() {
+        return isCommented;
+    }
+
+    public void setIsDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    public void setIsCommented(boolean isCommented) {
+        this.isCommented = isCommented;
+    }
+
+    public void setComments(List<Message> comments) {
+        this.comments = comments;
+    }
+
+    public Message getParent() {
+        return parent;
+    }
+
+    public void setParent(Message parent) {
+        this.parent = parent;
+    }
+
+    public int getNumberOfComments(){
+        return this.comments.size();
     }
     
     
