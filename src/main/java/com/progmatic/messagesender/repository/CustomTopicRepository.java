@@ -7,11 +7,13 @@ package com.progmatic.messagesender.repository;
 
 import com.progmatic.messagesender.Topic;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author progmatic
  */
+@Repository
 public interface CustomTopicRepository {
     
 //    List<Topic> getAllTopics();

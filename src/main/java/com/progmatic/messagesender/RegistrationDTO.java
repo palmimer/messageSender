@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
  *
  * @author progmatic
  */
+
 public class RegistrationDTO {
     @NotNull
     @NotEmpty

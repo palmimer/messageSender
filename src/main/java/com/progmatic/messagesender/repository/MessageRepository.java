@@ -5,24 +5,22 @@
  */
 package com.progmatic.messagesender.repository;
 
-import com.progmatic.messagesender.Topic;
+import com.progmatic.messagesender.Message;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author progmatic
  */
-@Repository
-public interface TopicRepository extends JpaRepository<Topic, Integer>, CustomTopicRepository {
+
+
+public interface MessageRepository extends JpaRepository<Message, Integer>, CustomMessageRepository {
     
-    Topic findByTitle(String title);
+    Message findBySender(String username);
     
-    boolean existsByTitle(String title);
+    boolean existsBySender(String username);
     
     boolean existsById(int id);
-    
-    
     
 }

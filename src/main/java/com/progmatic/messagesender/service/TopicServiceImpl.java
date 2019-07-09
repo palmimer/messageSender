@@ -5,17 +5,11 @@
  */
 package com.progmatic.messagesender.service;
 
-import com.progmatic.messagesender.Message;
 import com.progmatic.messagesender.Topic;
 import java.util.List;
-import javax.persistence.EntityGraph;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import static org.hibernate.jpa.QueryHints.HINT_LOADGRAPH;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.progmatic.messagesender.repository.CustomTopicRepositoryImpl;
 import com.progmatic.messagesender.repository.TopicRepository;
 
 /**

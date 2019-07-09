@@ -6,11 +6,9 @@
 package com.progmatic.messagesender.repository;
 
 import com.progmatic.messagesender.Topic;
-import java.util.List;
 import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import static org.hibernate.jpa.QueryHints.HINT_LOADGRAPH;
 import org.springframework.stereotype.Repository;
 
