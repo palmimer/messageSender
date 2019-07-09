@@ -36,33 +36,27 @@ public interface CustomMessageRepository {
     
 //    List<Message> getNotDeletedMessages();
     
-    Message getSingleMessage(int messageId);
+//    Message getSingleMessage(int messageId);
+//    
+//    void addNewMessage(Message message);
+//    
+//    void setMessageAsCommented(Message message);
+//    
+//    void createNewComment(int parentMessageId, Message comment);
     
-    void addNewMessage(Message message);
+//    public void setMessageToDelete(int messageId);
     
-    void setMessageAsCommented(Message message);
+//    void restoreMessage(int messageId);
     
-    void createNewComment(int parentMessageId, Message comment);
+//    void finallyDeleteSelectedMessages();
     
-    public void setMessageToDelete(int messageId);
-    
-    void restoreMessage(int messageId);
-    
-    void finallyDeleteSelectedMessages();
-    
-    void deleteMessage(int messageId);
-    
-    List<Message> putListInOrderByName(List<Message> list);
-    
-    List<Message> makeShortList(int messageCountToShow, List<Message> list );
+//    void deleteMessage(int messageId);
     
     List<Message> getDeletedMessages();
-    
-    List<Message> filterMessagesByTopic(int topicId);
-    
-    int getNumberOfComments(Message message);
-    
-    List<Message> getCommentsOfMessage(int messageId);
+//    
+//    List<Message> filterMessagesByTopic(int topicId);
+//    
+//    
     
     
 }

@@ -5,12 +5,10 @@
  */
 package com.progmatic.messagesender;
 
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
@@ -27,10 +25,6 @@ public class Authority implements GrantedAuthority {
     
     private String authority;
     
-//    @ManyToOne
-//    private List<RegisteredUser> registeredUsers;
-    
-    
     @Override
     public String getAuthority() {
         return authority;
@@ -43,14 +37,6 @@ public class Authority implements GrantedAuthority {
     public void setId(int id) {
         this.id = id;
     }
-
-//    public List<RegisteredUser> getRegisteredUsers() {
-//        return registeredUsers;
-//    }
-//
-//    public void setRegisteredUsers(List<RegisteredUser> registeredUsers) {
-//        this.registeredUsers = registeredUsers;
-//    }
 
     public void setAuthority(String authority) {
         this.authority = authority;

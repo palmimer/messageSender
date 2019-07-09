@@ -28,6 +28,7 @@ import javax.transaction.Transactional;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 /**
  *
@@ -108,24 +109,26 @@ public class CustomMessageRepositoryImpl implements CustomMessageRepository {
         //készítek egy listát a szűrési feltételeknek
         List<Predicate> predics = new ArrayList<>();
         // szűrés a küldőre
-        if (!searchCriteria.getSender().isEmpty()) {
+        if (StringUtils.hasText(searchCriteria.getSender())) {
             Predicate predic = cb.like(user.get(RegisteredUser_.username), searchCriteria.getSender());
             predics.add(predic);
         }
         // szűrés az üzenet szövege alapjén
-        if (!searchCriteria.getText().isEmpty()) {
+        if (StringUtils.hasText(searchCriteria.getText())) {
             Predicate predic = cb.like(m.get(Message_.text), "%" + searchCriteria.getText() + "%" );
             predics.add(predic);
         }
         // szűrés az üzenet topicja alapján
-        if (searchCriteria.getTopicId() != 0 ) {
+        if (searchCriteria.getTopicId() != null ) {
             Predicate predic = cb.equal(topic.get(Topic_.id), searchCriteria.getTopicId());
         }
-        
+                
         // itt átadom a szűrési feltételeket tömbbé átalakítva a cQuery-nek 
         cQuery.select(m).where(predics.toArray(new Predicate[predics.size()]));
         // futtatom a szűrést és elkérem a végeredményt
-        return em.createQuery(cQuery).getResultList();
+        List<Message> resultList = em.createQuery(cQuery).getResultList();
+        return resultList;
+        
     }
     
     @Transactional
@@ -134,19 +137,11 @@ public class CustomMessageRepositoryImpl implements CustomMessageRepository {
                 .setParameter("isDeleted", false)
                 .getResultList();
         
-//        List<Message> validMessages = new ArrayList<>();
-//        for (int i = 0; i < messages.size(); i++) {
-//            if (!messages.get(i).isIsDeleted()) {
-//                validMessages.add(messages.get(i));
-//            }
-//        }
-//        return validMessages;
     }
     
 //    @Transactional
 //    public Message getSingleMessage(int messageId){
-////        Map<Integer, Message> messagesWithIds = makeMapWithIds();
-////        return messagesWithIds.get(messageId);
+        
 //        return em
 //                .createNamedQuery("loadmessagebyid", Message.class)
 //                .setParameter("id", messageId)
@@ -160,27 +155,13 @@ public class CustomMessageRepositoryImpl implements CustomMessageRepository {
 
     }
     
-    @Transactional
-    public void setMessageAsCommented(Message message) {
-        message.setIsCommented(true);
-    }
+//    @PreAuthorize("hasAuthority('ADMIN')")
+//    @Transactional
+//    public void deleteMessage(int messageId) {
+//        
+//        em.remove((messageId));
+//    }
     
-    
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @Transactional
-    public void deleteMessage(int messageId) {
-        
-        em.remove(getSingleMessage(messageId));
-    }
-    
-    public List<Message> putListInOrderByName(List<Message> list){
-        return list.stream().sorted(new SenderComparator()).collect(Collectors.toList());
-    }
-    
-    public List<Message> makeShortList(int messageCountToShow, List<Message> list ){
-        // Math.min() amelyik a kisebb érték, azt adjuk meg a sublist végső értékének
-        return list.subList(0, Math.min(list.size(), messageCountToShow));
-    }
     
     @Transactional
     public List<Message> getDeletedMessages() {
@@ -208,7 +189,7 @@ public class CustomMessageRepositoryImpl implements CustomMessageRepository {
         return message.getComments().size();
     }
 
-    @Override
+    @Transactional
     public List<Message> getCommentsOfMessage(int messageId) {
         // példányosítunk egy Criteriabuilder-t
         CriteriaBuilder cb = em.getCriteriaBuilder();

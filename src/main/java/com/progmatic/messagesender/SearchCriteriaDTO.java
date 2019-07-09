@@ -13,27 +13,27 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 public class SearchCriteriaDTO {
 //    @RequestParam(value = "mc", defaultValue = "15") 
-    private int messageCountToShow = 15;
+    private Integer messageCountToShow = 15;
     
 //    @RequestParam(value = "order", defaultValue = "false") 
-    private boolean inOrder = false;
+    private Boolean inOrder = false;
     
 //    @RequestParam(value = "selectMessages", defaultValue = "notdeleted") 
     // ez három értéket vehet fel: notdeleted, deleted, v. all
     private String selectMessages = "notdeleted";
     
 //    @RequestParam(value = "topicChoice", defaultValue= "0" )
-    private int topicId = 0 ;
+    private Integer topicId = 0 ;
     
-    private String sender;
+    private String sender = "";
     
-    private String text;
+    private String text = "";
 
     public SearchCriteriaDTO(
-            int messageCountToShow, 
-            boolean inOrder, 
+            Integer messageCountToShow, 
+            Boolean inOrder, 
             String selectMessages, 
-            int topicId, 
+            Integer topicId, 
             String sender, 
             String text) {
         this.messageCountToShow = messageCountToShow;
@@ -44,19 +44,19 @@ public class SearchCriteriaDTO {
         this.text = text;
     }
 
-    public int getMessageCountToShow() {
+    public Integer getMessageCountToShow() {
         return messageCountToShow;
     }
 
-    public void setMessageCountToShow(int messageCountToShow) {
+    public void setMessageCountToShow(Integer messageCountToShow) {
         this.messageCountToShow = messageCountToShow;
     }
 
-    public boolean isInOrder() {
+    public Boolean isInOrder() {
         return inOrder;
     }
 
-    public void setInOrder(boolean inOrder) {
+    public void setInOrder(Boolean inOrder) {
         this.inOrder = inOrder;
     }
 
@@ -68,11 +68,11 @@ public class SearchCriteriaDTO {
         this.selectMessages = selectMessages;
     }
 
-    public int getTopicId() {
+    public Integer getTopicId() {
         return topicId;
     }
 
-    public void setTopicId(int topicId) {
+    public void setTopicId(Integer topicId) {
         this.topicId = topicId;
     }
 

@@ -64,9 +64,9 @@ public class MessageController {
             Model model){
         
         List<Message> filteredMessages = messageService.filterMessages(criteria);
+        List<Message> selectedMessages = messageService.selectMessages(criteria, filteredMessages);
         
-        if (servletRequest.isUserInRole("ADMIN")) {
-            
+//        if (servletRequest.isUserInRole("ADMIN")) {
 //            if (selectMessages.equals("deleted")) {
 //                shortList = messageService.listDeletedMessages(messageCountToShow, inOrder, topicId, sender, text);
 //            } else if (selectMessages.equals("all")) {
@@ -74,11 +74,11 @@ public class MessageController {
 //            } else {
 //                shortList = messageService.listNotDeletedMessages(messageCountToShow, inOrder, topicId, sender, text);
 //            }
-        } else if (servletRequest.isUserInRole("USER")){
+//        } else if (servletRequest.isUserInRole("USER")){
 //              shortList = messageService.listNotDeletedMessages(messageCountToShow, inOrder, topicId, sender, text);
-        }
+//        }
         model.addAttribute("messages", filteredMessages);
-        model.addAttribute("selectMessages", criteria.getSelectMessages());
+//        model.addAttribute("selectMessages", criteria.getSelectMessages());
         model.addAttribute("topics", topicService.getAllTopics());
         model.addAttribute("topicChoice", criteria.getTopicId());
         return "messages";

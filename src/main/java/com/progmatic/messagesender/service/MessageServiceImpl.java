@@ -8,12 +8,17 @@ package com.progmatic.messagesender.service;
 import com.progmatic.messagesender.Message;
 import com.progmatic.messagesender.RegisteredUser;
 import com.progmatic.messagesender.SearchCriteriaDTO;
+import com.progmatic.messagesender.SenderComparator;
 import com.progmatic.messagesender.repository.MessageRepository;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /**
  *
@@ -37,8 +42,39 @@ public class MessageServiceImpl {
         return messageRepository.filterMessages(searchCriteria);
     }
     
+    public List<Message> selectMessages(SearchCriteriaDTO searchCriteria, List<Message> list){
+        List<Message> selectedMessages = new ArrayList<>();
+        if (StringUtils.hasText(searchCriteria.getSelectMessages())) {
+            if (searchCriteria.getSelectMessages().equals("deleted")) {
+                for (Message message : list) {
+                    if (message.isIsDeleted()) {
+                        selectedMessages.add(message);
+                    }
+                }
+                return selectedMessages;
+            } else if (searchCriteria.getSelectMessages().equals("notdeleted")) {
+                for (Message message : list) {
+                    if (message.isIsDeleted() == false) {
+                        selectedMessages.add(message);
+                    }
+                }
+                return selectedMessages;
+            }
+        }
+        return list;
+    }
+    
     public Message getSingleMessage(int messageId){
         return messageRepository.getOne(messageId);
+    }
+    
+    public List<Message> putListInOrderByName(List<Message> list){
+        return list.stream().sorted(new SenderComparator()).collect(Collectors.toList());
+    }
+    
+    public List<Message> makeShortList(int messageCountToShow, List<Message> list ){
+        // Math.min() amelyik a kisebb érték, azt adjuk meg a sublist végső értékének
+        return list.subList(0, Math.min(list.size(), messageCountToShow));
     }
     
     
@@ -46,8 +82,10 @@ public class MessageServiceImpl {
         return message.getComments().size();
     }
     
+    @Transactional
     public List<Message> getCommentsOfMessage(int messageId){
-        return messageRepository.getCommentsOfMessage(messageId);
+        Message one = messageRepository.getOne(messageId);
+        return one.getComments();
     }
     
     
@@ -55,14 +93,11 @@ public class MessageServiceImpl {
         messageRepository.save(message);
     }
     
-    public void setMessageAsCommented(Message message) {
-        messageRepository.setMessageAsCommented(message);
-    }
     
     @Transactional
     public void createNewComment(int parentMessageId, Message comment){
         Message messageToUpdate = messageRepository.getOne(parentMessageId);
-        setMessageAsCommented(messageToUpdate);
+        messageToUpdate.setIsCommented(true);
         
         RegisteredUser user = (RegisteredUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         comment.setSender(user);
@@ -71,16 +106,27 @@ public class MessageServiceImpl {
         addNewMessage(comment);
     }
     
+    
+    @Transactional
     public void setMessageToDelete(int messageId){
-        messageRepository.setMessageToDelete(messageId);
+        getSingleMessage(messageId).setToDelete();
     }
     
+    @Transactional
     public void restoreMessage(int messageId){
-        messageRepository.restoreMessage(messageId);
+        getSingleMessage(messageId).setNotToDelete();
     }
     
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @Transactional
     public void finallyDeleteSelectedMessages(){
-        messageRepository.finallyDeleteSelectedMessages();
+        List<Message> toDelete = messageRepository.getDeletedMessages();
+        messageRepository.deleteInBatch(toDelete);
+    }
+    
+    @Transactional
+    public void setMessageAsCommented(Message message) {
+        message.setIsCommented(true);
     }
     
 //    public List<Message> listNotDeletedMessages(int messageCountToShow, boolean inOrder, int topicId, String sender, String text){
@@ -131,20 +177,6 @@ public class MessageServiceImpl {
 //        return shortList;
 //    }
     
-//    @Transactional
-//    public List<Message> getNotDeletedMessages(){
-//        return em.createQuery("SELECT m FROM Message m WHERE m.isDeleted = :isDeleted")
-//                .setParameter("isDeleted", false)
-//                .getResultList();
-//        
-////        List<Message> validMessages = new ArrayList<>();
-////        for (int i = 0; i < messages.size(); i++) {
-////            if (!messages.get(i).isIsDeleted()) {
-////                validMessages.add(messages.get(i));
-////            }
-////        }
-////        return validMessages;
-//    }
 //    
 //    
 //    @Transactional
