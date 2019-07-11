@@ -64,6 +64,10 @@ public class MessageServiceImpl {
         return list;
     }
     
+    public List<Message> findAll(){
+        return messageRepository.findAll();
+    }
+    
     public Message getSingleMessage(int messageId){
         return messageRepository.getOne(messageId);
     }
@@ -115,6 +119,11 @@ public class MessageServiceImpl {
     @Transactional
     public void restoreMessage(int messageId){
         getSingleMessage(messageId).setNotToDelete();
+    }
+    
+    @Transactional
+    public void finallyDeleteMessage(Message message){
+        messageRepository.delete(message);
     }
     
     @PreAuthorize("hasAuthority('ADMIN')")

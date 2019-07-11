@@ -5,6 +5,7 @@
  */
 package com.progmatic.messagesender;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import static javax.persistence.CascadeType.REMOVE;
@@ -17,6 +18,7 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -30,6 +32,7 @@ import javax.persistence.OneToMany;
             @NamedAttributeNode(value = "messages")
             }
     ))
+@XmlRootElement
 public class Topic implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +43,7 @@ public class Topic implements Serializable {
     @Column(unique = true)
     private String title;
     
+    @JsonIgnore
     @OneToMany(cascade=REMOVE, mappedBy="topic")
     private List<Message> messages;
 

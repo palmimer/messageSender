@@ -5,12 +5,15 @@
  */
 package com.progmatic.messagesender;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author progmatic
  */
+
+
 public class SearchCriteriaDTO {
 //    @RequestParam(value = "mc", defaultValue = "15") 
     private Integer messageCountToShow = 15;
